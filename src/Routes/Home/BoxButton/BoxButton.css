@@ -4,6 +4,7 @@
     align-items: center;
     flex-wrap: wrap;
     width: 100vw;
+    margin-top: 30px;
 }
 
 .boxButton-container{
@@ -13,52 +14,35 @@
     align-items: center;
     flex-wrap: wrap;
     background-color: #ffffff60;
-    border-radius: 15px;
-    padding: 5%;
+    border-radius: 5px;
     width: 40%;
     margin: 5px;
     box-sizing: border-box ;
 }
 
-.box-img{
-    padding: 35px 50px;
-    border-radius: 30px;
+
+.box1{
+    background-color: #EF8354;
 }
 
-.gato1{
-    background: url(../../../Assets/Mwomages/gato1.png);
-    background-position: top;
-    background-size: cover;
+.box2{
+    background-color: #EE4B6A;
 }
 
-.gato2{
-    background: url(../../../Assets/Mwomages/gato2.jpg);
-    background-position: center;
-    background-size: cover;
+.box3{
+    background-color: #DF3B57;
 }
 
-.gato3{
-    background: url(../../../Assets/Mwomages/gato3.jpg);
-    background-position: center;
-    background-size: cover;
+.box4{
+    background-color: #0F7173;
 }
 
-.gato4{
-    background: url(../../../Assets/Mwomages/gato4.jpg);
-    background-position: center;
-    background-size: cover;
+.box5{
+    background-color: #EF8354;
 }
 
-.gato5{
-    background: url(../../../Assets/Mwomages/gato5.png);
-    background-position: center;
-    background-size: cover;
-}
-
-.gato6{
-    background: url(../../../Assets/Mwomages/gato6.jpg);
-    background-position: center;
-    background-size: cover;
+.box6{
+    background-color: #DF3B57;
 }
 
 .boxButton-description{
@@ -66,5 +50,7 @@
     font-family: 'Roboto';
     font-weight: 300;
     margin: 20px 0;
-    text-transform: uppercase;
+    text-transform: upperc ase;
+    color: #fff;
+    text-shadow: 5px 4px 4px #00000080;
 }

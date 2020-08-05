@@ -4,10 +4,6 @@
     margin: 0;
 }
 
-html{
-    font-size: 100%;
-}
-
 .header{
     display: flex;
     flex-direction: column;
@@ -16,9 +12,6 @@ html{
     margin: auto;
     width: 100vw;
     height: 40vh;
-    background-image: url(../../../Assets/Mwomages/gatiheader.jpg);
-    background-size: cover;
-    background-position: top;
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
 }
@@ -29,15 +22,9 @@ html{
 }
 
 .header-subtitle{
-    font-size: 1rem;
-    letter-spacing: 1rem;
-}
-
-.header-sub-subtitle{
     background-color: #ffffff90;
     font-size: 2rem;
     width: 90vw;
     border-radius: 10px;
     margin-top: 30px;
 }
-

@@ -3,8 +3,7 @@ import './BoxButton.css';
 
 function BoxButton({background, description}) {
     return(
-        <div className='boxButton-container'>
-            <div className={`box-img ${background}`}></div>
+        <div className={`boxButton-container ${background}`}>
             <p className='boxButton-description'>{description}</p>
         </div>
     )

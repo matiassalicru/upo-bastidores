@@ -60,4 +60,5 @@ textarea{
     background: #D88C9A70;
     color: #00000050;
     cursor: pointer;
+    box-shadow: 5px 4px 4px #00000050;
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from '../Home/Header/Header';
 import FakeButton from '../Home/FakeButton/FakeButton';
-import search from '../../Assets/Mwomages/013-search1.png';
-import box from '../../Assets/Mwomages/005-fastdelivery1.png';
-import wallet from '../../Assets/Mwomages/046-wallet1.png';
-import truck from '../../Assets/Mwomages/003-delivery1.png';
+import search from '../../Assets/images/013-search1.png';
+import onlinePayment from '../../Assets/images/online-payment.png';
+import wallet from '../../Assets/images/046-wallet1.png';
+import truck from '../../Assets/images/003-delivery1.png';
 import BoxButton from './BoxButton/BoxButton';
-import Contact from './ContactForm/Contact';
+import Footer from './Footer/Footer';
 
 export default function Home () {
     return (
@@ -15,52 +15,35 @@ export default function Home () {
         <div className="fake-btn-container">
           <FakeButton
             color="color1"
-            icon={search}
-            description="Medidas específicas"
+            icon={truck}
+            description="Envios a domicilio"
           />
           <FakeButton
             color="color2"
-            icon={box}
-            description="Pedidos por mayor"
-          />
-          <FakeButton
-            color="color3"
-            icon={wallet}
+            icon={onlinePayment}
             description="Todos los medios de pago"
           />
           <FakeButton
+            color="color3"
+            icon={search}
+            description="Fabricamos a medida"
+          />
+          <FakeButton
             color="color4"
-            icon={truck}
-            description="Envios a todo el país"
+            icon={wallet}
+            description="Precios por mayor y menor"
           />
         </div>
-        <div className='box-btn-container'>
-          <BoxButton 
-            background='gato1' 
-            description="¿Quienes Somos?" 
-          />
-          <BoxButton
-            background='gato2' 
-            description="Nuestros Productos" 
-          />
-          <BoxButton 
-            background='gato3' 
-            description="Reventa" 
-          />
-          <BoxButton 
-            background='gato4' 
-            description="Promociones" 
-          />
-          <BoxButton 
-            background='gato5' 
-            description="Compras por Mayor" 
-          />
-          <BoxButton 
-            background='gato6' 
-            description="Compras por menor" 
-          />
+        <div className="box-btn-container">
+          <BoxButton background="box1" description="¿Quienes Somos?" />
+          <BoxButton background="box2" description="Nuestros Productos" />
+          <BoxButton background="box3" description="Reventa" />
+          <BoxButton background="box4" description="Promociones" />
+          <BoxButton background="box5" description="Compras por Mayor" />
+          <BoxButton background="box6" description="Compras por menor" />
+          <BoxButton background="box6" description="Galeria de clientes" />
         </div>
-        <Contact/>
+        <Footer/>
       </>
     );
 }
