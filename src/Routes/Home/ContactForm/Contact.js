@@ -10,8 +10,9 @@ function Contact(){
               <input type="text" placeholder="Nombre*" />
               <input type="text" placeholder="Email*" />
             </div>
-            <textarea cols="20" rows="10" />
+            <textarea cols="20" rows="7" placeholder='Mensaje*'/>
           </div>
+          <input className='submit-btn' type="submit" value="ENVIAR"/>
         </form>
     );
 }
