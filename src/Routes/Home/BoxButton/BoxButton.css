@@ -52,6 +52,7 @@
 .gato5{
     background: url(../../../Assets/Mwomages/gato5.png);
     background-position: center;
+    background-size: cover;
 }
 
 .gato6{

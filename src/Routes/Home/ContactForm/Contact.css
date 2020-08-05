@@ -3,12 +3,22 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
     background-color: #F9F4ED;
     border-radius: 10px;
     margin: 50px;
     padding: 20px;
-    width: 60vw;
+    width: 80vw;
     height: 30rem;
+}
+
+.form-inputs-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-title{
@@ -21,29 +31,26 @@
     flex-direction: column;
     justify-content: space-between;
     height: 8rem;
-    margin: 20px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
+
 .form-inputs input,textarea{
-    padding: 10px 20px;
-    margin: 10px;
+    padding: 10px 0 10px 10px;
+    margin: auto;
+    width: 100%;
     border: 1px solid #fff;
     border-radius: 10px;
-    width: auto;
+}
+
+textarea{
+    padding: 10px 0 40px 5px;
 }
 
 .form-inputs input,textarea::placeholder{
     font-family: 'roboto';
     text-transform: uppercase;
-}
-
-.form-inputs-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 10px;
 }
 
 .submit-btn{
