@@ -5,8 +5,8 @@
     align-items: center;
     flex-direction: column;
     border-radius: 10px;
-    width: 16vw;
-    height: 10vh;
+    width: 20vw;
+    height: 12vh;
     color: #fff;
     padding: 10px;
     margin: 0.5rem;
@@ -31,7 +31,8 @@
 }
 
 .box-description{
-    font-size: 0.22rem;
+    font-size: 0.45rem;
+    width: 100%;
     font-family: 'Roboto';
     text-transform: uppercase;
     font-weight: 200;

@@ -11,21 +11,24 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 40px 40px 40px;
+    flex-wrap: wrap;
     background-color: #ffffff60;
-    border-radius: 26px;
-    margin: 20px;
+    border-radius: 15px;
+    padding: 5%;
+    width: 40%;
+    margin: 5px;
+    box-sizing: border-box ;
 }
 
 .box-img{
-    padding: 135px 150px;
+    padding: 35px 50px;
     border-radius: 30px;
-    
 }
 
 .gato1{
     background: url(../../../Assets/Mwomages/gato1.png);
     background-position: top;
+    background-size: cover;
 }
 
 .gato2{
@@ -58,7 +61,7 @@
 }
 
 .boxButton-description{
-    font-size: 1.7rem;
+    font-size: 0.7rem;
     font-family: 'Roboto';
     font-weight: 300;
     margin: 20px 0;
