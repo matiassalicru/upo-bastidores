@@ -1,15 +1,11 @@
 import React from 'react';
 import './Header.css';
+import logo from '../../../Assets/images/Logo.svg';
 
 export default function Header(){
     return (
           <div className='header'>
-                <p className='header-title'>UPO</p>
-                <div className='header-subtitle'>
-                    <p>
-                        Un picasso original
-                    </p>
-                </div>
+                <img src={logo} alt="logo"/>
           </div>
     );
 }

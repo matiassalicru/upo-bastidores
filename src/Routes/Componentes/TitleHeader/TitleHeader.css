@@ -1,0 +1,17 @@
+.title-header-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 20vh;
+    margin: 5rem 0;
+}
+
+.title-header{
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 3rem;
+    color: white;
+    text-transform: uppercase;
+}

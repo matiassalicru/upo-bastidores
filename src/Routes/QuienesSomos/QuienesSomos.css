@@ -1,0 +1,15 @@
+.quienes-somos-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.quienes-somos-container>p{
+    text-align: justify;
+    width: 60vw;
+    font-size: 1.5rem;
+    margin: 2rem 0;
+    font-family: 'Roboto';
+    letter-spacing: 0.05rem;
+}
