@@ -10,6 +10,8 @@ import axios from "axios";
 
 const Ventas = () => {
   const [productos, setProductos] = useState({});
+  const [carrito, setCarrito] = useState([]);
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     axios
@@ -84,7 +86,28 @@ const Ventas = () => {
     cantidad.innerHTML = 1;
   }
 
-  function AddToCart() {}
+  function AddToCart() {
+    let IdMedida = document.getElementById("select-medida").value;
+    let medida = productos[IdMedida - 1].Medidas;
+    let cantidad = document.querySelector("#ventas-cantidad").value;
+    let precio = document.getElementById("precio").value;
+    let selectedProducto = document.getElementById("select-producto").value;
+
+
+    if(cantidad === '0' || precio === '0'){
+      console.log("Por favor seleccionar una cantidad");
+    } else {
+      const product = `Producto: ${selectedProducto} | Medida: ${medida} | Cantidad: ${cantidad} | Precio: $${precio}`;
+      carrito.push(product)
+      setCarrito(carrito);
+      defaultValues();
+      let cuenta = count+1;
+      setCount(cuenta);
+      console.log(count);
+      console.log(cuenta);
+    }
+
+  }
 
   return (
     <div className="ventas-container">
@@ -159,9 +182,11 @@ const Ventas = () => {
         </div>
       </div>
 
-      {/* <div id="carrito-array">
-          <ul className="carrito"></ul>
-        </div> */}
+      <div className="carrito-array" id="carrito-array">
+        <ul className="carrito">
+          { carrito.length>0 && carrito.map((item, index) => <li className='carrito-item' key={index}>{item}</li>) }
+        </ul>
+      </div>
 
       <HomeBtn color="salmon" />
       <Footer />

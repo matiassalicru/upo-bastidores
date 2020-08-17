@@ -36,6 +36,8 @@
 .insise-precio{
     display: flex;
     align-items: center;
+    font-family: 'Roboto';
+    font-size: 1.2rem;
 }
 
 .insise-precio>label{
@@ -100,7 +102,23 @@
     transform: translateY(5px);
 }
 
+.carrito-array{
+    display: flex;
+    color: black;
+}
+
 .carrito{
     display: flex;
     flex-direction: column;
+    list-style-type: none;
+    margin-top: 2rem;
+}
+
+.carrito-item{
+    margin-top: 10px;
+    font-family: 'Roboto';
+    font-size: 1.1rem;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: #DF3B5750;
 }
