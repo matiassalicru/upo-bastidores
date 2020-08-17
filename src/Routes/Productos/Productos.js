@@ -19,7 +19,7 @@ const Productos = () => {
         <TitleHeader title="Nuestros Productos" color="red" />
         <InfoCard />
         <div className="video">
-          <video src={video} autoPlay="true" loop="true" />
+          <video src={video} autoPlay={true} loop={true} />
         </div>
         <div className="productos-description">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quo

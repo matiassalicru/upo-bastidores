@@ -19,8 +19,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     height: auto;
     width: 100%;
+    background-color: whitesmoke;
 }
 
 .ventas-select{
@@ -28,6 +30,7 @@
     flex-direction: column;
     align-items: center;
     padding: 50px;
+    width: 30vw;
 }
 
 .ventas-select>label{
@@ -51,10 +54,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
+    width: 30vw;
     height: 53px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     outline: none;
     background-color: #DF3B5750;
 }
@@ -64,16 +67,23 @@
     text-align: center;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .ventas-agregar{
     padding: 20px;
     background: none;
-    border: 1px solid #c4c4c4;
+    border: 1px solid #a7a7a7;
     border-radius: 20px;
     cursor: pointer;
     outline: none;
     transition: all 0.2s ;
+    width: 40vw;
+    text-transform: uppercase;
+    box-shadow: 4px 5px 7px #a7a7a7;
+    font-family: 'Roboto';
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 .ventas-agregar:active{

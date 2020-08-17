@@ -18,41 +18,46 @@ const Ventas = () => {
   }, [setProductos]);
 
   function countQuantity() {
-    let IdMedida = document.getElementById("select-medida").value;
-    let precioUnidad = productos[IdMedida - 1].precioUnidad;
+    const cantidad = document.getElementById("ventas-cantidad");
 
-    let precioMedida = document.getElementById("precio");
-    let cantidad = document.getElementById("ventas-cantidad");
-    let result = cantidad.value * precioUnidad;
-
-    precioMedida.innerHTML = `$ ${result}`;
-    result = precioUnidad;
+    if (cantidad.value >= 8) {
+      console.log(
+        "Llevando 8 productos o más estás accediendo a precios por mayor!"
+      );
+      const IdMedida = document.getElementById("select-medida").value;
+      const precioMedida = document.getElementById("precio");
+      const precioUnidad = productos[IdMedida - 1].precioMayor;
+      let result = cantidad.value * precioUnidad;
+      precioMedida.innerHTML = `$ ${result}`;
+      result = precioUnidad;
+    } else {
+      const IdMedida = document.getElementById("select-medida").value;
+      const precioMedida = document.getElementById("precio");
+      const precioUnidad = productos[IdMedida - 1].precioUnidad;
+      let result = cantidad.value * precioUnidad;
+      precioMedida.innerHTML = `$ ${result}`;
+      result = precioUnidad;
+    }
   }
 
-  function AddToCart(e) {
-    e.preventDefault();
-  }
 
   function handleProducto() {
     let selectedProducto = document.getElementById("select-producto").value;
 
     if (selectedProducto === "madera") {
-        axios
+      axios
         .get("https://database-upo-bastidores.herokuapp.com/madera")
         .then((res) => setProductos(res.data));
-        
-        defaultValues();
 
-
-      } else if (selectedProducto === "lienzo") {
-      
-        axios
+      defaultValues();
+    } else if (selectedProducto === "lienzo") {
+      axios
         .get("https://database-upo-bastidores.herokuapp.com/lienzo")
         .then((res) => setProductos(res.data));
-    
-        defaultValues();
-    } else if (selectedProducto !== 'lienzo' || selectedProducto !== 'madera'){
-      alert('No tenemos stock de estos productos :(');
+
+      defaultValues();
+    } else if (selectedProducto !== "lienzo" || selectedProducto !== "madera") {
+      alert("No tenemos stock de estos productos :(");
       defaultValues();
 
       let precioMedida = document.getElementById("precio");
@@ -61,16 +66,14 @@ const Ventas = () => {
   }
 
   function defaultValues() {
+    let cantidad = document.querySelector("#ventas-cantidad");
+    cantidad.value = 0;
 
-        let cantidad = document.querySelector("#ventas-cantidad");
-        cantidad.value = 0;
+    let IdMedida = document.getElementById("select-medida");
+    IdMedida.value = 1;
 
-        let IdMedida = document.getElementById("select-medida");
-        IdMedida.value = 1;
-
-        let precioMedida = document.getElementById("precio");
-        precioMedida.innerHTML = 'Selecciona una cantidad';
-
+    let precioMedida = document.getElementById("precio");
+    precioMedida.innerHTML = "Selecciona una cantidad";
   }
 
   function handleMedida() {
@@ -83,6 +86,11 @@ const Ventas = () => {
     precioMedida.innerHTML = `$ ${precio}`;
     cantidad.value = 1;
     cantidad.innerHTML = 1;
+  }
+
+  
+  function AddToCart() {
+
   }
 
   return (
@@ -118,7 +126,11 @@ const Ventas = () => {
           >
             {productos.length > 0 &&
               productos.map((producto) => (
-                <option key={producto.ID} value={producto.ID} id='option-medida'>
+                <option
+                  key={producto.ID}
+                  value={producto.ID}
+                  id="option-medida"
+                >
                   {producto.Medidas}
                 </option>
               ))}
@@ -137,18 +149,17 @@ const Ventas = () => {
           />
         </div>
         <div className="ventas-select">
-          <label>Precio</label>
+          <label>Precio Total</label>
           <div className="ventas-precio" id="precio"></div>
         </div>
         <div className="ventas-select">
-          <button
-            onClick={AddToCart}
+          <input
             type="submit"
+            onClick={AddToCart}
             id="add-btn"
             className="ventas-agregar"
-          >
-            Agregar
-          </button>
+            value='Agregar'
+            />
         </div>
       </div>
 
