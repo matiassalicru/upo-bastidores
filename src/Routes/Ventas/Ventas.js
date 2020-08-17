@@ -28,18 +28,17 @@ const Ventas = () => {
       const precioMedida = document.getElementById("precio");
       const precioUnidad = productos[IdMedida - 1].precioMayor;
       let result = cantidad.value * precioUnidad;
-      precioMedida.innerHTML = `$ ${result}`;
+      precioMedida.value = result;
       result = precioUnidad;
     } else {
       const IdMedida = document.getElementById("select-medida").value;
       const precioMedida = document.getElementById("precio");
       const precioUnidad = productos[IdMedida - 1].precioUnidad;
       let result = cantidad.value * precioUnidad;
-      precioMedida.innerHTML = `$ ${result}`;
+      precioMedida.value = result;
       result = precioUnidad;
     }
   }
-
 
   function handleProducto() {
     let selectedProducto = document.getElementById("select-producto").value;
@@ -59,21 +58,18 @@ const Ventas = () => {
     } else if (selectedProducto !== "lienzo" || selectedProducto !== "madera") {
       alert("No tenemos stock de estos productos :(");
       defaultValues();
-
-      let precioMedida = document.getElementById("precio");
-      precioMedida.innerHTML = "No hay stock";
     }
   }
 
   function defaultValues() {
-    let cantidad = document.querySelector("#ventas-cantidad");
-    cantidad.value = 0;
-
     let IdMedida = document.getElementById("select-medida");
     IdMedida.value = 1;
 
+    let cantidad = document.querySelector("#ventas-cantidad");
+    cantidad.value = 0;
+
     let precioMedida = document.getElementById("precio");
-    precioMedida.innerHTML = "Selecciona una cantidad";
+    precioMedida.value = 0;
   }
 
   function handleMedida() {
@@ -83,15 +79,12 @@ const Ventas = () => {
 
     let precio = productos[IdMedida - 1].precioUnidad;
 
-    precioMedida.innerHTML = `$ ${precio}`;
+    precioMedida.value = precio;
     cantidad.value = 1;
     cantidad.innerHTML = 1;
   }
 
-  
-  function AddToCart() {
-
-  }
+  function AddToCart() {}
 
   return (
     <div className="ventas-container">
@@ -150,7 +143,10 @@ const Ventas = () => {
         </div>
         <div className="ventas-select">
           <label>Precio Total</label>
-          <div className="ventas-precio" id="precio"></div>
+          <div className="insise-precio">
+            <label>$</label>
+            <input type="number" value="0" disabled={true} id="precio" />
+          </div>
         </div>
         <div className="ventas-select">
           <input
@@ -158,8 +154,8 @@ const Ventas = () => {
             onClick={AddToCart}
             id="add-btn"
             className="ventas-agregar"
-            value='Agregar'
-            />
+            value="Agregar"
+          />
         </div>
       </div>
 

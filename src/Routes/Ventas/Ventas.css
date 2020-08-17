@@ -33,6 +33,16 @@
     width: 30vw;
 }
 
+.insise-precio{
+    display: flex;
+    align-items: center;
+}
+
+.insise-precio>label{
+    margin-right: 10px;
+    font-size: 20px;
+}
+
 .ventas-select>label{
     font-family: 'Roboto';
     font-size: 1.2rem;
