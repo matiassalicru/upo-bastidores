@@ -6,12 +6,13 @@ import TitleHeader from "../Componentes/TitleHeader/TitleHeader";
 import InfoCard from "../Componentes/InfoCard/InfoCard";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Footer from "../Componentes/Footer/Footer";
+
+//Import Axios
 import axios from "axios";
 
 const Ventas = () => {
   const [productos, setProductos] = useState({});
   const [carrito, setCarrito] = useState([]);
-  const [count, setCount] = useState(1);
 
   useEffect(() => {
     axios
@@ -45,13 +46,13 @@ const Ventas = () => {
   function handleProducto() {
     let selectedProducto = document.getElementById("select-producto").value;
 
-    if (selectedProducto === "madera") {
+    if (selectedProducto === "Bastidor de Madera") {
       axios
         .get("https://database-upo-bastidores.herokuapp.com/madera")
         .then((res) => setProductos(res.data));
 
       defaultValues();
-    } else if (selectedProducto === "lienzo") {
+    } else if (selectedProducto === "Bastidor de Lienzo") {
       axios
         .get("https://database-upo-bastidores.herokuapp.com/lienzo")
         .then((res) => setProductos(res.data));
@@ -87,24 +88,24 @@ const Ventas = () => {
   }
 
   function AddToCart() {
-    let IdMedida = document.getElementById("select-medida").value;
+    const IdMedida = document.getElementById("select-medida").value;
     let medida = productos[IdMedida - 1].Medidas;
     let cantidad = document.querySelector("#ventas-cantidad").value;
-    let precio = document.getElementById("precio").value;
-    let selectedProducto = document.getElementById("select-producto").value;
+    const precio = document.getElementById("precio").value;
+    const selectedProducto = document.getElementById("select-producto").value;
 
-
-    if(cantidad === '0' || precio === '0'){
-      console.log("Por favor seleccionar una cantidad");
+    if (cantidad === "0" || precio === "0") {
+      return console.log("Por favor seleccionar una cantidad");
     } else {
-      const product = `Producto: ${selectedProducto} | Medida: ${medida} | Cantidad: ${cantidad} | Precio: $${precio}`;
-      carrito.push(product)
-      setCarrito(carrito);
+
+      const nombre = `${selectedProducto} ${medida}`;
+      const cantidades = `${cantidad}`;
+      const precios = `${precio}`;
+
+      const item = [`${nombre}CM`, `Cantidad: ${cantidades}`, `$${precios}`];
       defaultValues();
-      let cuenta = count+1;
-      setCount(cuenta);
-      console.log(count);
-      console.log(cuenta);
+
+      return setCarrito([...carrito, item]);
     }
 
   }
@@ -126,8 +127,8 @@ const Ventas = () => {
             className="select-med"
             onChange={handleProducto}
           >
-            <option value="lienzo">Bastidores de lienzo</option>
-            <option value="madera">Bastidores de madera</option>
+            <option value="Bastidor de Lienzo">Bastidores de lienzo</option>
+            <option value="Bastidor de Madera">Bastidores de madera</option>
             <option value="Marcos">Marcos</option>
             <option value="Estructuras">Estructuras</option>
             <option value="MDF entelados">MDF Entelados</option>
@@ -183,9 +184,21 @@ const Ventas = () => {
       </div>
 
       <div className="carrito-array" id="carrito-array">
+        <label className='ventas-subtitle'>Tus productos</label>
         <ul className="carrito">
-          { carrito.length>0 && carrito.map((item, index) => <li className='carrito-item' key={index}>{item}</li>) }
+          {carrito.length > 0 &&
+            carrito.map((item, index) => (
+              <li className="carrito-item" key={index}>
+                {item.join(" - ")}
+              </li>
+            ))}
         </ul>
+      </div>
+
+      <div>
+        {carrito.length > 0 && (
+          <button className='ventas-enviar' type="submit" onClick={() => console.log(`Tus productos: \n ${carrito.join('\n')}`)} >Enviar pedido</button>
+        )}
       </div>
 
       <HomeBtn color="salmon" />

@@ -27,17 +27,18 @@ export default function Home () {
           <Link to="/compras" style={linkStyle}>
             <BoxButton color="salmon" description="Compras por Mayor y Menor" />
           </Link>
-          <Link to='/promociones' style={linkStyle}>
+          <Link to="/promociones" style={linkStyle}>
             <BoxButton color="green" description="Ofertas y promociones" />
           </Link>
-          <Link to='/contacto' style={linkStyle}>
+          <Link to="/contacto" style={linkStyle}>
             <BoxButton color="orange" description="Contáctanos" />
           </Link>
-          <Link to='/clientes' style={linkStyle}>
+          <Link to="/clientes" style={linkStyle}>
             <BoxButton color="red" description="Galeria de clientes" />
           </Link>
         </div>
         <Footer />
+          
       </>
     );
 }

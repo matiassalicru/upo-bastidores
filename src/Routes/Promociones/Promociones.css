@@ -1,0 +1,10 @@
+.promociones-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.promociones-cards{
+    margin: 4rem 25%;
+}
