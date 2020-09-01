@@ -221,3 +221,15 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0; 
 }
+
+.loading-screen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #c3c3c3;
+    color: tomato;
+    font-size: 5rem;
+    opacity: 0.8;
+}

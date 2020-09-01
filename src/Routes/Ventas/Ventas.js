@@ -10,19 +10,25 @@ import Footer from "../Componentes/Footer/Footer";
 //Import libraries
 import axios from "axios";
 import emailjs from "emailjs-com";
-import swal from 'sweetalert';
+import swal from "sweetalert";
+import Lottie from "react-lottie";
 
 //Extra imports
 import trash from "../../Assets/images/trash.svg";
+import animationData from "../../Data/loading5.json";
 
 const Ventas = () => {
   const [productos, setProductos] = useState({});
   const [carrito, setCarrito] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("https://database-upo-bastidores.herokuapp.com/lienzo")
-      .then((res) => setProductos(res.data));
+    setTimeout(() => {
+      axios
+        .get("https://database-upo-bastidores.herokuapp.com/lienzo")
+        .then((res) => setProductos(res.data))
+        .then(() => setLoading(false));
+    }, 500);
   }, [setProductos]);
 
   function countQuantity() {
@@ -102,7 +108,7 @@ const Ventas = () => {
     if (cantidad === "0" || precio === "0") {
       return swal({
         title: "Por favor seleccionar una cantidad primero",
-        icon: "warning"
+        icon: "warning",
       });
     } else {
       const nombre = `${selectedProducto} ${medida}`;
@@ -133,166 +139,197 @@ const Ventas = () => {
       .then(
         () => {
           swal({
-            title: 'Tu pedido ha sido enviado, pronto nos estaremos comunicando con vos!',
-            icon: 'success'
-          })
+            title:
+              "Tu pedido ha sido enviado, pronto nos estaremos comunicando con vos!",
+            icon: "success",
+          });
           setCarrito([]);
         },
         (error) => {
           console.log(error.text);
         }
       );
-
   };
 
   const removeItem = (index) => {
     carrito.splice(index, 1);
     setCarrito([...carrito]);
+
     swal({
       title: "Producto eliminado",
-      icon: 'error'
+      icon: "error",
     });
   };
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
-    <div className="ventas-container">
-      <TitleHeader title="Compras por mayor y menor" color="salmon" />
-      <InfoCard />
+    <>
+      {loading ? (
+        <div className="loading-screen">
+          <Lottie options={defaultOptions} height={400} width={400} />
+        </div>
+      ) : (
+        <div className="ventas-container">
+          <TitleHeader title="Compras por mayor y menor" color="salmon" />
+          <InfoCard />
 
-      <p className="ventas-subtitle">
-        Si seleccionas mas de 7 unidades accedes a la compra por mayor!
-      </p>
+          <p className="ventas-subtitle">
+            Si seleccionas mas de 7 unidades accedes a la compra por mayor!
+          </p>
 
-      <div className="ventas-select-producto">
-        <div className="ventas-select">
-          <label htmlFor="product">Seleccionar producto</label>
-          <select
-            id="select-producto"
-            className="select-med"
-            onChange={handleProducto}
-          >
-            <option value="Bastidor de Lienzo">Bastidores de lienzo</option>
-            <option value="Bastidor de Madera">Bastidores de madera</option>
-            <option value="Marcos">Marcos</option>
-            <option value="Estructuras">Estructuras</option>
-            <option value="MDF entelados">MDF Entelados</option>
-          </select>
-        </div>
-        <div className="ventas-select">
-          <label htmlFor="medida">Seleccionar medidas</label>
-          <div className="select-med">
-            <select id="select-medida" onChange={handleMedida}>
-              {productos.length > 0 &&
-                productos.map((producto) => (
-                  <option
-                    key={producto.ID}
-                    value={producto.ID}
-                    id="option-medida"
-                  >
-                    {producto.Medidas}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </div>
-        <div className="ventas-select">
-          <label>Cantidad</label>
-          <input
-            type="number"
-            name="quantity"
-            id="ventas-cantidad"
-            min="0"
-            defaultValue="0"
-            autoComplete="off"
-            onChange={countQuantity}
-          />
-        </div>
-        <div className="ventas-select">
-          <label>Precio Total</label>
-          <div className="insise-precio">
-            <label>$</label>
-            <input type="number" value="0" disabled={true} id="precio" />
-          </div>
-        </div>
-        <div className="ventas-select">
-          <input
-            type="submit"
-            onClick={AddToCart}
-            id="add-btn"
-            className="ventas-agregar"
-            value="Agregar"
-          />
-        </div>
-      </div>
-
-      <div className="carrito-array" id="carrito-array">
-        {carrito.length > 0 ? (
-          <label className="ventas-subtitle">Tus productos</label>
-        ) : (
-          <label className="ventas-subtitle">Tu carrito está vacío</label>
-        )}
-        <ul className="carrito">
-          {carrito.length > 0 &&
-            carrito.map((item, index) => (
-              <li className="carrito-item" key={index}>
-                {item.join(" - ")}
-                <button onClick={() => removeItem(index)} className="trash-can">
-                  <img srcSet={trash} alt="trashCan"></img>
-                </button>
-              </li>
-            ))}
-        </ul>
-      </div>
-
-      <div>
-        {carrito.length > 0 && (
-          <>
-            <form className="request-container" onSubmit={sendEmail}>
-              <p className="request-title">
-                Por favor completá los siguientes datos para realizar el pedido.
-              </p>
-              <label htmlFor="input">Nombre*</label>
+          <div className="ventas-select-producto">
+            <div className="ventas-select">
+              <label htmlFor="product">Seleccionar producto</label>
+              <select
+                id="select-producto"
+                className="select-med"
+                onChange={handleProducto}
+              >
+                <option value="Bastidor de Lienzo">Bastidores de lienzo</option>
+                <option value="Bastidor de Madera">Bastidores de madera</option>
+                <option value="Marcos">Marcos</option>
+                <option value="Estructuras">Estructuras</option>
+                <option value="MDF entelados">MDF Entelados</option>
+              </select>
+            </div>
+            <div className="ventas-select">
+              <label htmlFor="medida">Seleccionar medidas</label>
+              <div className="select-med">
+                <select id="select-medida" onChange={handleMedida}>
+                  {productos.length > 0 &&
+                    productos.map((producto) => (
+                      <option
+                        key={producto.ID}
+                        value={producto.ID}
+                        id="option-medida"
+                      >
+                        {producto.Medidas}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            </div>
+            <div className="ventas-select">
+              <label>Cantidad</label>
               <input
-                className="request-input"
-                type="text"
-                placeholder="Nombre*"
-                name="from_name"
-                required={true}
+                type="number"
+                name="quantity"
+                id="ventas-cantidad"
+                min="0"
+                defaultValue="0"
+                autoComplete="off"
+                onChange={countQuantity}
               />
-              <label htmlFor="input">Email*</label>
+            </div>
+            <div className="ventas-select">
+              <label>Precio Total</label>
+              <div className="insise-precio">
+                <label>$</label>
+                <input type="number" value="0" disabled={true} id="precio" />
+              </div>
+            </div>
+            <div className="ventas-select">
               <input
-                className="request-input"
-                type="text"
-                placeholder="Email*"
-                name="from_email"
-                required={true}
-              />
-              <label htmlFor="input">Provincia*</label>
-              <input
-                className="request-input"
-                type="text"
-                placeholder="Provincia y localidad*"
-                name="from_state"
-                required={true}
-              />
-              <textarea
-                name="message"
-                id="send-pedido"
-                // style={{ display: "none" }}
-              />
-              <input
-                className="ventas-enviar"
                 type="submit"
-                value="Enviar pedido"
+                onClick={AddToCart}
+                id="add-btn"
+                className="ventas-agregar"
+                value="Agregar"
               />
-            </form>
-          </>
-        )}
-      </div>
+            </div>
+          </div>
 
-      <HomeBtn color="salmon" />
-      <Footer />
-    </div>
+          <div className="carrito-array" id="carrito-array">
+            {carrito.length > 0 ? (
+              <label className="ventas-subtitle">Tus productos</label>
+            ) : (
+              <label className="ventas-subtitle">Tu carrito está vacío</label>
+            )}
+            <ul className="carrito">
+              {carrito.length > 0 &&
+                carrito.map((item, index) => (
+                  <li className="carrito-item" key={index}>
+                    {item.join(" - ")}
+                    <button
+                      onClick={() => removeItem(index)}
+                      className="trash-can"
+                    >
+                      <img srcSet={trash} alt="trashCan"></img>
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          </div>
+
+          <div>
+            {carrito.length > 0 && (
+              <>
+                <form className="request-container" onSubmit={sendEmail}>
+                  <p className="request-title">
+                    Por favor completá los siguientes datos para realizar el
+                    pedido.
+                  </p>
+                  <label htmlFor="input">Nombre*</label>
+                  <input
+                    className="request-input"
+                    type="text"
+                    placeholder="Nombre*"
+                    name="from_name"
+                    required={true}
+                  />
+                  <label htmlFor="input">Email*</label>
+                  <input
+                    className="request-input"
+                    type="text"
+                    placeholder="Email*"
+                    name="from_email"
+                    required={true}
+                  />
+                  <label htmlFor="input">Provincia*</label>
+                  <input
+                    className="request-input"
+                    type="text"
+                    placeholder="Provincia y localidad*"
+                    name="from_state"
+                    required={true}
+                  />
+                  <label htmlFor="input">Teléfono*</label>
+                  <input
+                    className="request-input"
+                    type="number"
+                    placeholder="Número de teléfono*"
+                    name="from_num"
+                    required={true}
+                    autoComplete={false}
+                  />
+                  <textarea
+                    name="message"
+                    id="send-pedido"
+                    style={{ display: "none" }}
+                  />
+                  <input
+                    className="ventas-enviar"
+                    type="submit"
+                    value="Enviar pedido"
+                  />
+                </form>
+              </>
+            )}
+          </div>
+
+          <HomeBtn color="salmon" />
+          <Footer />
+        </div>
+      )}
+    </>
   );
 };
 

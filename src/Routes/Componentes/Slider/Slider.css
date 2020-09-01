@@ -1,14 +1,12 @@
-
 .carousel-container{
     margin: auto;
     width: 100%;
-    background-color: #c4c4c490;
     box-sizing: border-box;
     padding: 50px;
 }
 
 .slider{
-    width: 45vw;
+    width: 35vw;
     height: 100%;
     margin: auto;
     object-fit: cover;
@@ -26,9 +24,41 @@
 
 .carousel-title{
     font-size: 2.8rem;
-    color: #444;
+    color: #474747;
     font-family: 'Roboto';
-    font-weight: 300;
-    padding: 20px 30px;
-    margin: 0px 0px 50px 0;
+    font-weight: 600;
+    padding: 0px 30px;
+    margin: auto;
+    background-color: #fca35a90;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.dots{
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    margin: 20px 0px 0px 0px 
+}
+
+.dots>li{
+    background-color:black;
+    margin: 5px;
+    border-radius: 50px;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.dots>li:hover{
+    background-color:#c3c3c3;
+    color: #c3c3c3;
+}
+
+.dots>li>button{
+    background: none;
+    padding: 0 15px;
+    width: 100%;
+    border: none;
+    outline: none;
+    color: inherit;
 }

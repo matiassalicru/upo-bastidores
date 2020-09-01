@@ -14,12 +14,13 @@ const Carousel = ({images, title}) => {
     infinite: true,
     speed: 1000,
     slidesToShow: 1,
-    arrows: true,
+    arrows: false,
     SlidesToScroll: 1,
     className: "slider",
     adaptiveHeight: true,
     autoplay: true,
     centerMode: true,
+    dotsClass: 'dots'
   };
 
   return (
