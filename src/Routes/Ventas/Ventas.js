@@ -7,8 +7,13 @@ import InfoCard from "../Componentes/InfoCard/InfoCard";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Footer from "../Componentes/Footer/Footer";
 
-//Import Axios
+//Import libraries
 import axios from "axios";
+import emailjs from "emailjs-com";
+import swal from 'sweetalert';
+
+//Extra imports
+import trash from "../../Assets/images/trash.svg";
 
 const Ventas = () => {
   const [productos, setProductos] = useState({});
@@ -95,20 +100,59 @@ const Ventas = () => {
     const selectedProducto = document.getElementById("select-producto").value;
 
     if (cantidad === "0" || precio === "0") {
-      return console.log("Por favor seleccionar una cantidad");
+      return swal({
+        title: "Por favor seleccionar una cantidad primero",
+        icon: "warning"
+      });
     } else {
-
       const nombre = `${selectedProducto} ${medida}`;
       const cantidades = `${cantidad}`;
       const precios = `${precio}`;
-
       const item = [`${nombre}CM`, `Cantidad: ${cantidades}`, `$${precios}`];
       defaultValues();
 
       return setCarrito([...carrito, item]);
     }
-
   }
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    const pedido = document.querySelector("#send-pedido");
+    const newCarrito = carrito.map((item) => item.join(" - "));
+    pedido.innerHTML = newCarrito.join(
+      "---------------------------------------------------------------------"
+    );
+
+    emailjs
+      .sendForm(
+        "gmail",
+        "Enviar_pedido",
+        e.target,
+        "user_PAkxwlUKIEI1sNLQ3RoEx"
+      )
+      .then(
+        () => {
+          swal({
+            title: 'Tu pedido ha sido enviado, pronto nos estaremos comunicando con vos!',
+            icon: 'success'
+          })
+          setCarrito([]);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+
+  };
+
+  const removeItem = (index) => {
+    carrito.splice(index, 1);
+    setCarrito([...carrito]);
+    swal({
+      title: "Producto eliminado",
+      icon: 'error'
+    });
+  };
 
   return (
     <div className="ventas-container">
@@ -136,22 +180,20 @@ const Ventas = () => {
         </div>
         <div className="ventas-select">
           <label htmlFor="medida">Seleccionar medidas</label>
-          <select
-            id="select-medida"
-            className="select-med"
-            onChange={handleMedida}
-          >
-            {productos.length > 0 &&
-              productos.map((producto) => (
-                <option
-                  key={producto.ID}
-                  value={producto.ID}
-                  id="option-medida"
-                >
-                  {producto.Medidas}
-                </option>
-              ))}
-          </select>
+          <div className="select-med">
+            <select id="select-medida" onChange={handleMedida}>
+              {productos.length > 0 &&
+                productos.map((producto) => (
+                  <option
+                    key={producto.ID}
+                    value={producto.ID}
+                    id="option-medida"
+                  >
+                    {producto.Medidas}
+                  </option>
+                ))}
+            </select>
+          </div>
         </div>
         <div className="ventas-select">
           <label>Cantidad</label>
@@ -184,12 +226,19 @@ const Ventas = () => {
       </div>
 
       <div className="carrito-array" id="carrito-array">
-        <label className='ventas-subtitle'>Tus productos</label>
+        {carrito.length > 0 ? (
+          <label className="ventas-subtitle">Tus productos</label>
+        ) : (
+          <label className="ventas-subtitle">Tu carrito está vacío</label>
+        )}
         <ul className="carrito">
           {carrito.length > 0 &&
             carrito.map((item, index) => (
               <li className="carrito-item" key={index}>
                 {item.join(" - ")}
+                <button onClick={() => removeItem(index)} className="trash-can">
+                  <img srcSet={trash} alt="trashCan"></img>
+                </button>
               </li>
             ))}
         </ul>
@@ -197,7 +246,47 @@ const Ventas = () => {
 
       <div>
         {carrito.length > 0 && (
-          <button className='ventas-enviar' type="submit" onClick={() => console.log(`Tus productos: \n ${carrito.join('\n')}`)} >Enviar pedido</button>
+          <>
+            <form className="request-container" onSubmit={sendEmail}>
+              <p className="request-title">
+                Por favor completá los siguientes datos para realizar el pedido.
+              </p>
+              <label htmlFor="input">Nombre*</label>
+              <input
+                className="request-input"
+                type="text"
+                placeholder="Nombre*"
+                name="from_name"
+                required={true}
+              />
+              <label htmlFor="input">Email*</label>
+              <input
+                className="request-input"
+                type="text"
+                placeholder="Email*"
+                name="from_email"
+                required={true}
+              />
+              <label htmlFor="input">Provincia*</label>
+              <input
+                className="request-input"
+                type="text"
+                placeholder="Provincia y localidad*"
+                name="from_state"
+                required={true}
+              />
+              <textarea
+                name="message"
+                id="send-pedido"
+                // style={{ display: "none" }}
+              />
+              <input
+                className="ventas-enviar"
+                type="submit"
+                value="Enviar pedido"
+              />
+            </form>
+          </>
         )}
       </div>
 

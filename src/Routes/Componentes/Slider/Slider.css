@@ -1,0 +1,34 @@
+
+.carousel-container{
+    margin: auto;
+    width: 100%;
+    background-color: #c4c4c490;
+    box-sizing: border-box;
+    padding: 50px;
+}
+
+.slider{
+    width: 45vw;
+    height: 100%;
+    margin: auto;
+    object-fit: cover;
+    padding: 50px 0;
+}
+
+.slider>button{
+    color: black;
+}
+
+.carousel-img{
+    margin: auto;
+    border-radius: 20px;
+}
+
+.carousel-title{
+    font-size: 2.8rem;
+    color: #444;
+    font-family: 'Roboto';
+    font-weight: 300;
+    padding: 20px 30px;
+    margin: 0px 0px 50px 0;
+}

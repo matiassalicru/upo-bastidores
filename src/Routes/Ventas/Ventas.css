@@ -21,7 +21,6 @@
     justify-content: center;
     flex-wrap: wrap;
     height: auto;
-    width: 100%;
     background-color: whitesmoke;
 }
 
@@ -79,7 +78,7 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 42%;
 }
 
 .ventas-agregar{
@@ -105,7 +104,7 @@
 .carrito-array{
     display: flex;
     flex-direction: column;
-    color: black;
+    color: #2b2b2b;
 }
 
 .carrito{
@@ -115,11 +114,14 @@
 }
 
 .carrito-item{
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-family: 'Roboto';
+    margin-top: 5px;
     font-size: 1.1rem;
     padding: 15px;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: #DF3B5750;
 }
 
@@ -147,5 +149,75 @@
 }
 
 .ventas-enviar:hover{
-    transform: skewY(2deg);
+    transform: scale(1.01);
+}
+
+
+.request-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #c4c4c450;
+    border-radius: 20px;
+}
+
+.request-title{
+    font-size: 1.2rem;
+    font-family: 'Roboto';
+    font-weight: 300;
+    padding: 20px 30px;
+    background-color: #c4c4c450;
+    border-radius: 10px;
+    margin: 50px 0;
+}
+
+.request-container>label{
+    font-size: 1.2rem;
+    font-family: 'Roboto';
+    width: 60%;
+    text-align: start;
+    margin: 10px 0;
+}
+
+.request-input{
+    margin: 10px 0;
+    width: 60%;
+    text-align: start;
+}
+
+.request-input::placeholder{
+    font-size: 1rem;
+    text-align: start;
+}
+
+.trash-can{
+    background: none;
+    padding: 10px;
+    margin: 0 8px 0 10px;
+    border: 1px solid #a7a7a7;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+    outline: none;
+}
+
+.trash-can>img{
+    display: flex;
+    margin: auto;
+    height: 20px;
+}
+
+.trash-can:hover{
+    transform: scale(1.1);
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }
