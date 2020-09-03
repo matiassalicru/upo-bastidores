@@ -112,12 +112,48 @@ const Ventas = () => {
       });
     } else {
       const nombre = `${selectedProducto} ${medida}`;
-      const cantidades = `${cantidad}`;
-      const precios = `${precio}`;
-      const item = [`${nombre}CM`, `Cantidad: ${cantidades}`, `$${precios}`];
-      defaultValues();
+      const cantidades = cantidad;
+      const precios = precio;
 
-      return setCarrito([...carrito, item]);
+      if (carrito.length > 0) {
+        carrito.forEach((item) => {
+          console.log(item);
+
+          if (item[0].includes(nombre)) {
+            const cantidadAnterior = parseInt(item[1]);
+            console.log(cantidadAnterior);
+            console.log(cantidades);
+            const nuevaCantidad =
+              parseInt(cantidadAnterior) + parseInt(cantidades);
+            console.log(nuevaCantidad);
+
+            const precioAnterior = parseInt(item[3]);
+
+            const nuevoPrecio = parseInt(precioAnterior) + parseInt(precios);
+
+            const nuevoItem = [
+              `${nombre}CM Cantidad: `,
+              nuevaCantidad,
+              ` $`,
+              nuevoPrecio,
+            ];
+
+            carrito.splice(carrito.indexOf(item), 1);
+            defaultValues();
+            return setCarrito([...carrito, nuevoItem]);
+          } else {
+            const item2 = [`${nombre}CM Cantidad: `, cantidades, ` $`, precios];
+
+            defaultValues();
+            return setCarrito([...carrito, item2]);
+          }
+        });
+      } else {
+        const item2 = [`${nombre}CM Cantidad: `, cantidades, ` $`, precios];
+
+        defaultValues();
+        return setCarrito([...carrito, item2]);
+      }
     }
   }
 
@@ -202,8 +238,12 @@ const Ventas = () => {
             </div>
             <div className="ventas-select">
               <label htmlFor="medida">Seleccionar medidas</label>
-              <div className="select-med">
-                <select id="select-medida" onChange={handleMedida}>
+              <div>
+                <select
+                  id="select-medida"
+                  className="select-med"
+                  onChange={handleMedida}
+                >
                   {productos.length > 0 &&
                     productos.map((producto) => (
                       <option
@@ -222,6 +262,7 @@ const Ventas = () => {
               <input
                 type="number"
                 name="quantity"
+                className="select-med"
                 id="ventas-cantidad"
                 min="0"
                 defaultValue="0"
@@ -233,7 +274,13 @@ const Ventas = () => {
               <label>Precio Total</label>
               <div className="insise-precio">
                 <label>$</label>
-                <input type="number" value="0" disabled={true} id="precio" />
+                <input
+                  type="number"
+                  className="select-med"
+                  value="0"
+                  disabled={true}
+                  id="precio"
+                />
               </div>
             </div>
             <div className="ventas-select">
@@ -308,7 +355,7 @@ const Ventas = () => {
                     placeholder="Número de teléfono*"
                     name="from_num"
                     required={true}
-                    autoComplete={false}
+                    autoComplete="off"
                   />
                   <textarea
                     name="message"

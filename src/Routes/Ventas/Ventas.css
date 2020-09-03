@@ -51,13 +51,13 @@
 }
 
 .ventas-select-producto select,input{
-    width: 100%;
-    padding: 20px;
+    width: 300px;
+    padding: 15px 20px;
     border: none;
     border-radius: 5px;
     outline: none;
     background-color: #DF3B5750;
-    text-align: center;
+    text-align: start;
     appearance: none;
 }
 
@@ -78,7 +78,7 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 42%;
+    font-size: 1.2rem;
 }
 
 .ventas-agregar{
@@ -95,6 +95,7 @@
     font-family: 'Roboto';
     font-weight: 600;
     font-size: 1.2rem;
+    text-align: center;
 }
 
 .ventas-agregar:active{

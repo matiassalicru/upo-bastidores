@@ -14,7 +14,7 @@
 }
 
 .slider>button{
-    color: black;
+    color: #f86585;
 }
 
 .carousel-img{
@@ -26,7 +26,8 @@
     font-size: 2.8rem;
     color: #474747;
     font-family: 'Roboto';
-    font-weight: 600;
+    font-weight: 400
+;
     padding: 0px 30px;
     margin: auto;
     background-color: #fca35a90;
@@ -43,10 +44,11 @@
 }
 
 .dots>li{
-    background-color:black;
+    background-color:#f86585;
     margin: 5px;
     border-radius: 50px;
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    cursor: pointer;
 }
 
 .dots>li:hover{
@@ -60,5 +62,7 @@
     width: 100%;
     border: none;
     outline: none;
-    color: inherit;
+    color: #f86585;
+    cursor: pointer;
+
 }
