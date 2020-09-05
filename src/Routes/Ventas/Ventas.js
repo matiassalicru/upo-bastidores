@@ -21,6 +21,9 @@ const Ventas = () => {
   const [productos, setProductos] = useState({});
   const [carrito, setCarrito] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [mayorista, setMayorista] = useState(false);
+
+  let cantidadFinal = 0;
 
   useEffect(() => {
     setTimeout(() => {
@@ -28,13 +31,18 @@ const Ventas = () => {
         .get("https://database-upo-bastidores.herokuapp.com/lienzo")
         .then((res) => setProductos(res.data))
         .then(() => setLoading(false));
-    }, 500);
+    }, 0);
   }, [setProductos]);
+
+  useEffect(() => {
+    handleMayorista();
+    console.log(cantidadFinal);
+  });
 
   function countQuantity() {
     const cantidad = document.getElementById("ventas-cantidad");
 
-    if (cantidad.value >= 8) {
+    if (cantidad.value >= 7 || cantidadFinal >= 7) {
       console.log(
         "Llevando 8 productos o más estás accediendo a precios por mayor!"
       );
@@ -55,6 +63,7 @@ const Ventas = () => {
   }
 
   function handleProducto() {
+    //utilizar para el handle mayorista.
     let selectedProducto = document.getElementById("select-producto").value;
 
     if (selectedProducto === "Bastidor de Madera") {
@@ -87,11 +96,16 @@ const Ventas = () => {
   }
 
   function handleMedida() {
-    let IdMedida = document.getElementById("select-medida").value;
-    let precioMedida = document.getElementById("precio");
-    let cantidad = document.getElementById("ventas-cantidad");
+    let IdMedida = document.getElementById("select-medida").value; //agarra la medida seleccionada
+    let precioMedida = document.getElementById("precio"); //agarra el div donde iría el precio
+    let cantidad = document.getElementById("ventas-cantidad"); //Agarra la cantidad seleccionada
+    let precio;
 
-    let precio = productos[IdMedida - 1].precioUnidad;
+    if (cantidadFinal >= 7) {
+      precio = productos[IdMedida - 1].precioMayor;
+    } else {
+      precio = productos[IdMedida - 1].precioUnidad;
+    }
 
     precioMedida.value = precio;
     cantidad.value = 1;
@@ -100,8 +114,8 @@ const Ventas = () => {
 
   function AddToCart() {
     const IdMedida = document.getElementById("select-medida").value;
-    let medida = productos[IdMedida - 1].Medidas;
-    let cantidad = document.querySelector("#ventas-cantidad").value;
+    const medida = productos[IdMedida - 1].Medidas;
+    const cantidad = document.querySelector("#ventas-cantidad").value;
     const precio = document.getElementById("precio").value;
     const selectedProducto = document.getElementById("select-producto").value;
 
@@ -111,45 +125,69 @@ const Ventas = () => {
         icon: "warning",
       });
     } else {
-      const nombre = `${selectedProducto} ${medida}`;
+      const id = IdMedida;
+      const nombre = selectedProducto;
+      const medidas = medida;
       const cantidades = cantidad;
       const precios = precio;
 
       if (carrito.length > 0) {
         carrito.forEach((item) => {
-          console.log(item);
-
-          if (item[0].includes(nombre)) {
-            const cantidadAnterior = parseInt(item[1]);
-            console.log(cantidadAnterior);
-            console.log(cantidades);
+          if (item[0].includes(nombre) && item[2].includes(medidas)) {
+            //Si el nombre que se encuentra en el elemento 0 del array ya existe en carrito simplemente suma la cantidad al elemento que ya existe
+            const cantidadAnterior = parseInt(item[5]);
             const nuevaCantidad =
               parseInt(cantidadAnterior) + parseInt(cantidades);
-            console.log(nuevaCantidad);
-
-            const precioAnterior = parseInt(item[3]);
-
+            const precioAnterior = parseInt(item[7]);
             const nuevoPrecio = parseInt(precioAnterior) + parseInt(precios);
 
             const nuevoItem = [
-              `${nombre}CM Cantidad: `,
+              nombre,
+              ` `,
+              medidas,
+              `CM `,
+              `Cantidad: `,
               nuevaCantidad,
               ` $`,
               nuevoPrecio,
+              id,
+              `:ID`,
             ];
 
-            carrito.splice(carrito.indexOf(item), 1);
+            carrito.splice(carrito.indexOf(item), 1); //Elimina el item anterior antes de agregar el nuevo con la nueva cantidad y el nuevo precio.
             defaultValues();
             return setCarrito([...carrito, nuevoItem]);
           } else {
-            const item2 = [`${nombre}CM Cantidad: `, cantidades, ` $`, precios];
+            const item2 = [
+              nombre,
+              ` `,
+              medidas,
+              `CM `,
+              `Cantidad: `,
+              cantidades,
+              ` $`,
+              precios,
+              id,
+              `:ID`
+            ];
 
             defaultValues();
             return setCarrito([...carrito, item2]);
           }
         });
       } else {
-        const item2 = [`${nombre}CM Cantidad: `, cantidades, ` $`, precios];
+        const item2 = [
+          nombre,
+          ` `,
+          medidas,
+          `CM `,
+          `Cantidad: `,
+          cantidades,
+          ` $`,
+          precios,
+          id,
+          `:ID`,
+        ];
 
         defaultValues();
         return setCarrito([...carrito, item2]);
@@ -195,8 +233,68 @@ const Ventas = () => {
       title: "Producto eliminado",
       icon: "error",
     });
+
+    if (carrito.length > 0) {
+      cantidadFinal = 0;
+
+      for (let i = 0; i < carrito.length; i++) {
+        const cantidad = carrito[i][5];
+        cantidadFinal += parseInt(cantidad);
+      }
+
+      if (cantidadFinal < 8) {
+        let cantidad;
+        let id;
+        for (let i = 0; i < carrito.length; i++) {
+          id = carrito[i][8];
+          cantidad = parseInt(carrito[i][5]);
+          carrito[i][7] = productos[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
+        }
+        swal('sus precios han sido modificados al por menor')
+        setMayorista(false);
+      } else {
+        let cantidad;
+        let id;
+        for (let i = 0; i < carrito.length; i++) {
+          id = carrito[i][8];
+          cantidad = parseInt(carrito[i][5]);
+          carrito[i][7] = productos[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+        }
+        swal("sus precios están al por mayor");
+        setMayorista(true);
+      }
+    } else {
+      swal("Tu carrito está vacio");
+    }
   };
 
+  const handleMayorista = () => { //BUG: Al cambiar el producto a lienzo o madera cambia los precios.
+    if (carrito.length > 0) {
+
+      for (let i = 0; i < carrito.length; i++) {
+        const cantidad = carrito[i][5];
+        cantidadFinal += parseInt(cantidad);
+      }
+
+      if (cantidadFinal > 7) {
+        setMayorista(true);
+        let cantidad;
+        let id;
+
+        for (let i = 0; i < carrito.length; i++) {
+          id = carrito[i][8];
+          cantidad = parseInt(carrito[i][5]);
+          carrito[i][7] = productos[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+        }
+      } else {
+        setMayorista(false);
+      }
+    } else {
+      setMayorista(false);
+    }
+  };
+
+  //Loading animation from Lottie
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -231,9 +329,9 @@ const Ventas = () => {
               >
                 <option value="Bastidor de Lienzo">Bastidores de lienzo</option>
                 <option value="Bastidor de Madera">Bastidores de madera</option>
-                <option value="Marcos">Marcos</option>
+                {/* <option value="Marcos">Marcos</option>
                 <option value="Estructuras">Estructuras</option>
-                <option value="MDF entelados">MDF Entelados</option>
+                <option value="MDF entelados">MDF Entelados</option> */}
               </select>
             </div>
             <div className="ventas-select">
@@ -304,7 +402,7 @@ const Ventas = () => {
               {carrito.length > 0 &&
                 carrito.map((item, index) => (
                   <li className="carrito-item" key={index}>
-                    {item.join(" - ")}
+                    {item.join(" ")}
                     <button
                       onClick={() => removeItem(index)}
                       className="trash-can"
@@ -318,59 +416,63 @@ const Ventas = () => {
 
           <div>
             {carrito.length > 0 && (
-              <>
-                <form className="request-container" onSubmit={sendEmail}>
-                  <p className="request-title">
-                    Por favor completá los siguientes datos para realizar el
-                    pedido.
-                  </p>
-                  <label htmlFor="input">Nombre*</label>
-                  <input
-                    className="request-input"
-                    type="text"
-                    placeholder="Nombre*"
-                    name="from_name"
-                    required={true}
-                  />
-                  <label htmlFor="input">Email*</label>
-                  <input
-                    className="request-input"
-                    type="text"
-                    placeholder="Email*"
-                    name="from_email"
-                    required={true}
-                  />
-                  <label htmlFor="input">Provincia*</label>
-                  <input
-                    className="request-input"
-                    type="text"
-                    placeholder="Provincia y localidad*"
-                    name="from_state"
-                    required={true}
-                  />
-                  <label htmlFor="input">Teléfono*</label>
-                  <input
-                    className="request-input"
-                    type="number"
-                    placeholder="Número de teléfono*"
-                    name="from_num"
-                    required={true}
-                    autoComplete="off"
-                  />
-                  <textarea
-                    name="message"
-                    id="send-pedido"
-                    style={{ display: "none" }}
-                  />
-                  <input
-                    className="ventas-enviar"
-                    type="submit"
-                    value="Enviar pedido"
-                  />
-                </form>
-              </>
+              <form className="request-container" onSubmit={sendEmail}>
+                <p className="request-title">
+                  Por favor completá los siguientes datos para realizar el
+                  pedido.
+                </p>
+                <label htmlFor="input">Nombre*</label>
+                <input
+                  className="request-input"
+                  type="text"
+                  placeholder="Nombre*"
+                  name="from_name"
+                  required={true}
+                />
+                <label htmlFor="input">Email*</label>
+                <input
+                  className="request-input"
+                  type="text"
+                  placeholder="Email*"
+                  name="from_email"
+                  required={true}
+                />
+                <label htmlFor="input">Provincia*</label>
+                <input
+                  className="request-input"
+                  type="text"
+                  placeholder="Provincia y localidad*"
+                  name="from_state"
+                  required={true}
+                />
+                <label htmlFor="input">Teléfono*</label>
+                <input
+                  className="request-input"
+                  type="number"
+                  placeholder="Número de teléfono*"
+                  name="from_num"
+                  required={true}
+                  autoComplete="off"
+                />
+                <textarea
+                  name="message"
+                  id="send-pedido"
+                  style={{ display: "none" }}
+                />
+                <input
+                  className="ventas-enviar"
+                  type="submit"
+                  value="Enviar pedido"
+                />
+              </form>
             )}
           </div>
+
+          {/* <div>
+            <button onClick={handleMayorista} className="ventas-enviar">
+              value="Cantidad total"
+            </button>
+          </div> */}
 
           <HomeBtn color="salmon" />
           <Footer />
