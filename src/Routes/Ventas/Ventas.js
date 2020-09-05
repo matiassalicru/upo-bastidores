@@ -53,6 +53,7 @@ const Ventas = () => {
     const nombre = document.getElementById("select-producto").value;
 
     if (cantidad.value > 7 || cantidadFinal >= 7) {
+
       const IdMedida = document.getElementById("select-medida").value;
       const precioMedida = document.getElementById("precio");
       let precioUnidad;
@@ -288,7 +289,7 @@ const Ventas = () => {
           }
         }
         swal("Sus precios han sido modificados al por menor");
-        setMayorista(false);
+        setMayorista(mayorista);
       } else {
         let cantidad;
         let id;

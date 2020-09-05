@@ -12,19 +12,13 @@ import location from "../../Assets/images/location.svg";
 
 function Contact() {
 
-  const carrito = [ ['producto1', 2, 'Lienzo'], ['producto2', 4, 'Madera'] ];
-
   const sendEmail = (e) => {
     e.preventDefault();
- 
-    const pedido = document.querySelector("#send-pedido");
-
-    pedido.innerHTML = carrito.join('');
 
     emailjs
       .sendForm(
         "gmail",
-        "template_w0BwjBcM",
+        "Enviar_Mensaje_Contacto",
         e.target,
         "user_PAkxwlUKIEI1sNLQ3RoEx"
       )
@@ -42,6 +36,9 @@ function Contact() {
     <div className="contact-container">
       <TitleHeader title="Contacto" color="orange" />
       <InfoCard />
+      <h1 className="ventas-subtitle">
+        Podés enviarnos un mensaje a través de nuestras redes!
+      </h1>
       <ul className="contact-list">
         <li className="item">
           <img src={insta} alt="*" />
@@ -75,19 +72,30 @@ function Contact() {
         </li>
       </ul>
       <form className="form-container" onSubmit={sendEmail}>
-        <h2 className="form-title">Contactanos!</h2>
+        <p className="form-title">Contactanos!</p>
         <div className="form-inputs-container">
           <div className="form-inputs">
-            <input type="text" placeholder="Nombre*" name='from_name' />
-            <input type="text" placeholder="Email*" name="from_email" />
+            <input
+              className="input-user"
+              type="text"
+              placeholder="Nombre*"
+              name="from_name"
+            />
+            <input
+              className="input-user"
+              type="text"
+              placeholder="Email*"
+              name="from_email"
+            />
           </div>
-          <textarea placeholder="Mensaje*" name='message' id='send-pedido'/>
+          <textarea
+            className="input-user"
+             placeholder="Mensaje*"
+            name="message"
+            id="send-pedido"
+          />
         </div>
-        <input
-          className="submit-btn"
-          type="submit"
-          value="ENVIAR"
-        />
+        <input className="submit-btn" type="submit" value="ENVIAR" />
       </form>
       <HomeBtn color="orange" />
       <Footer />
