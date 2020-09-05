@@ -18,7 +18,8 @@ import trash from "../../Assets/images/trash.svg";
 import animationData from "../../Data/loading5.json";
 
 const Ventas = () => {
-  const [productos, setProductos] = useState({});
+  const [lienzo, setLienzo] = useState({});
+  const [madera, setMadera] = useState({});
   const [carrito, setCarrito] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mayorista, setMayorista] = useState(false);
@@ -29,33 +30,53 @@ const Ventas = () => {
     setTimeout(() => {
       axios
         .get("https://database-upo-bastidores.herokuapp.com/lienzo")
-        .then((res) => setProductos(res.data))
+        .then((res) => setLienzo(res.data))
         .then(() => setLoading(false));
     }, 0);
-  }, [setProductos]);
+  }, [setLienzo]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      axios
+        .get("https://database-upo-bastidores.herokuapp.com/madera")
+        .then((res) => setMadera(res.data))
+        .then(() => setLoading(false));
+    }, 0);
+  }, [setLienzo]);
 
   useEffect(() => {
     handleMayorista();
-    console.log(cantidadFinal);
   });
 
   function countQuantity() {
     const cantidad = document.getElementById("ventas-cantidad");
+    const nombre = document.getElementById("select-producto").value;
 
-    if (cantidad.value >= 7 || cantidadFinal >= 7) {
-      console.log(
-        "Llevando 8 productos o más estás accediendo a precios por mayor!"
-      );
+    if (cantidad.value > 7 || cantidadFinal >= 7) {
       const IdMedida = document.getElementById("select-medida").value;
       const precioMedida = document.getElementById("precio");
-      const precioUnidad = productos[IdMedida - 1].precioMayor;
+      let precioUnidad;
+
+      if (nombre === "Bastidor de Madera") {
+        precioUnidad = madera[IdMedida - 1].precioMayor;
+      } else if (nombre === "Bastidor de Lienzo") {
+        precioUnidad = lienzo[IdMedida - 1].precioMayor;
+      }
+
       let result = cantidad.value * precioUnidad;
       precioMedida.value = result;
       result = precioUnidad;
     } else {
       const IdMedida = document.getElementById("select-medida").value;
       const precioMedida = document.getElementById("precio");
-      const precioUnidad = productos[IdMedida - 1].precioUnidad;
+      let precioUnidad;
+
+      if (nombre === "Bastidor de Madera") {
+        precioUnidad = madera[IdMedida - 1].precioUnidad;
+      } else if (nombre === "Bastidor de Lienzo") {
+        precioUnidad = lienzo[IdMedida - 1].precioUnidad;
+      }
+
       let result = cantidad.value * precioUnidad;
       precioMedida.value = result;
       result = precioUnidad;
@@ -69,13 +90,13 @@ const Ventas = () => {
     if (selectedProducto === "Bastidor de Madera") {
       axios
         .get("https://database-upo-bastidores.herokuapp.com/madera")
-        .then((res) => setProductos(res.data));
+        .then((res) => setMadera(res.data));
 
       defaultValues();
     } else if (selectedProducto === "Bastidor de Lienzo") {
       axios
         .get("https://database-upo-bastidores.herokuapp.com/lienzo")
-        .then((res) => setProductos(res.data));
+        .then((res) => setLienzo(res.data));
 
       defaultValues();
     } else if (selectedProducto !== "lienzo" || selectedProducto !== "madera") {
@@ -100,11 +121,20 @@ const Ventas = () => {
     let precioMedida = document.getElementById("precio"); //agarra el div donde iría el precio
     let cantidad = document.getElementById("ventas-cantidad"); //Agarra la cantidad seleccionada
     let precio;
+    let nombre = document.getElementById("select-producto").value;
 
     if (cantidadFinal >= 7) {
-      precio = productos[IdMedida - 1].precioMayor;
+      if (nombre === "Bastidor de Madera") {
+        precio = madera[IdMedida - 1].precioMayor;
+      } else if (nombre === "Bastidor de Lienzo") {
+        precio = lienzo[IdMedida - 1].precioMayor;
+      }
     } else {
-      precio = productos[IdMedida - 1].precioUnidad;
+      if (nombre === "Bastidor de Madera") {
+        precio = madera[IdMedida - 1].precioUnidad;
+      } else if (nombre === "Bastidor de Lienzo") {
+        precio = lienzo[IdMedida - 1].precioUnidad;
+      }
     }
 
     precioMedida.value = precio;
@@ -114,10 +144,15 @@ const Ventas = () => {
 
   function AddToCart() {
     const IdMedida = document.getElementById("select-medida").value;
-    const medida = productos[IdMedida - 1].Medidas;
+    let selectedProducto = document.getElementById("select-producto").value;
     const cantidad = document.querySelector("#ventas-cantidad").value;
     const precio = document.getElementById("precio").value;
-    const selectedProducto = document.getElementById("select-producto").value;
+    let medida;
+    if (selectedProducto === "Bastidor de Madera") {
+      medida = madera[IdMedida - 1].Medidas;
+    } else if (selectedProducto === "Bastidor de Lienzo") {
+      medida = lienzo[IdMedida - 1].Medidas;
+    }
 
     if (cantidad === "0" || precio === "0") {
       return swal({
@@ -133,15 +168,16 @@ const Ventas = () => {
 
       if (carrito.length > 0) {
         carrito.forEach((item) => {
-          if (item[0].includes(nombre) && item[2].includes(medidas)) {
-            //Si el nombre que se encuentra en el elemento 0 del array ya existe en carrito simplemente suma la cantidad al elemento que ya existe
-            const cantidadAnterior = parseInt(item[5]);
+          if (item[1].includes(nombre) && item[3].includes(medidas)) {
+            //Si el nombre que se encuentra en el elemento 1 del array ya existe en carrito simplemente suma la cantidad al elemento que ya existe
+            const cantidadAnterior = parseInt(item[6]);
             const nuevaCantidad =
               parseInt(cantidadAnterior) + parseInt(cantidades);
-            const precioAnterior = parseInt(item[7]);
+            const precioAnterior = parseInt(item[8]);
             const nuevoPrecio = parseInt(precioAnterior) + parseInt(precios);
 
             const nuevoItem = [
+              id,
               nombre,
               ` `,
               medidas,
@@ -150,8 +186,6 @@ const Ventas = () => {
               nuevaCantidad,
               ` $`,
               nuevoPrecio,
-              id,
-              `:ID`,
             ];
 
             carrito.splice(carrito.indexOf(item), 1); //Elimina el item anterior antes de agregar el nuevo con la nueva cantidad y el nuevo precio.
@@ -159,6 +193,7 @@ const Ventas = () => {
             return setCarrito([...carrito, nuevoItem]);
           } else {
             const item2 = [
+              id,
               nombre,
               ` `,
               medidas,
@@ -167,8 +202,6 @@ const Ventas = () => {
               cantidades,
               ` $`,
               precios,
-              id,
-              `:ID`
             ];
 
             defaultValues();
@@ -177,6 +210,7 @@ const Ventas = () => {
         });
       } else {
         const item2 = [
+          id,
           nombre,
           ` `,
           medidas,
@@ -185,8 +219,6 @@ const Ventas = () => {
           cantidades,
           ` $`,
           precios,
-          id,
-          `:ID`,
         ];
 
         defaultValues();
@@ -230,7 +262,7 @@ const Ventas = () => {
     setCarrito([...carrito]);
 
     swal({
-      title: "Producto eliminado",
+      title: 'Producto Eliminado',
       icon: "error",
     });
 
@@ -238,7 +270,7 @@ const Ventas = () => {
       cantidadFinal = 0;
 
       for (let i = 0; i < carrito.length; i++) {
-        const cantidad = carrito[i][5];
+        const cantidad = carrito[i][6];
         cantidadFinal += parseInt(cantidad);
       }
 
@@ -246,19 +278,29 @@ const Ventas = () => {
         let cantidad;
         let id;
         for (let i = 0; i < carrito.length; i++) {
-          id = carrito[i][8];
-          cantidad = parseInt(carrito[i][5]);
-          carrito[i][7] = productos[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
+          let nombre = carrito[i][1];
+          id = carrito[i][0];
+          cantidad = parseInt(carrito[i][6]);
+          if (nombre === "Bastidor de Madera") {
+            carrito[i][8] = madera[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
+          } else if (nombre === "Bastidor de Lienzo") {
+            carrito[i][8] = lienzo[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
+          }
         }
-        swal('sus precios han sido modificados al por menor')
+        swal("Sus precios han sido modificados al por menor");
         setMayorista(false);
       } else {
         let cantidad;
         let id;
         for (let i = 0; i < carrito.length; i++) {
-          id = carrito[i][8];
-          cantidad = parseInt(carrito[i][5]);
-          carrito[i][7] = productos[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+          let nombre = carrito[i][1];
+          id = carrito[i][0];
+          cantidad = parseInt(carrito[i][6]);
+          if (nombre === "Bastidor de Madera") {
+            carrito[i][8] = madera[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+          } else if (nombre === "Bastidor de Lienzo") {
+            carrito[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+          }
         }
         swal("sus precios están al por mayor");
         setMayorista(true);
@@ -268,11 +310,11 @@ const Ventas = () => {
     }
   };
 
-  const handleMayorista = () => { //BUG: Al cambiar el producto a lienzo o madera cambia los precios.
+  const handleMayorista = () => {
+    //BUG: Al cambiar el producto a lienzo o madera cambia los precios.
     if (carrito.length > 0) {
-
       for (let i = 0; i < carrito.length; i++) {
-        const cantidad = carrito[i][5];
+        const cantidad = carrito[i][6];
         cantidadFinal += parseInt(cantidad);
       }
 
@@ -282,9 +324,14 @@ const Ventas = () => {
         let id;
 
         for (let i = 0; i < carrito.length; i++) {
-          id = carrito[i][8];
-          cantidad = parseInt(carrito[i][5]);
-          carrito[i][7] = productos[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+          let nombre = carrito[i][1];
+          id = carrito[i][0];
+          cantidad = parseInt(carrito[i][6]);
+          if (nombre === "Bastidor de Madera") {
+            carrito[i][8] = madera[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+          } else if (nombre === "Bastidor de Lienzo") {
+            carrito[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+          }
         }
       } else {
         setMayorista(false);
@@ -342,8 +389,8 @@ const Ventas = () => {
                   className="select-med"
                   onChange={handleMedida}
                 >
-                  {productos.length > 0 &&
-                    productos.map((producto) => (
+                  {madera.length > 0 &&
+                    madera.map((producto) => (
                       <option
                         key={producto.ID}
                         value={producto.ID}
