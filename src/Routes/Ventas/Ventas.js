@@ -23,78 +23,51 @@ import Context from "../../store/context";
 const Ventas = () => {
   const [lienzo, setLienzo] = useState({});
   const [madera, setMadera] = useState({});
-  const [carrito, setCarrito] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mayorista, setMayorista] = useState(false);
 
   const { state, actions } = useContext(Context);
 
-  const addToGlobal = (e) => {
-    e.preventDefault();
-    // const input = document.querySelector('#input')
-    // actions({type: 'setState', payload: [...state, input.value]})
-    console.log(carrito);
-    actions({ type: "setState", payload: carrito });
-    console.log(state);
-  };
-
-  // LOCAL STORAGE
-
-  // const [value, setValue] = useState(localStorage.getItem("carritoArray") || []);
-
-  // useEffect(() => {
-  //     localStorage.setItem("carritoArray", value);
-  //   }, [value]);
-
-  // function local() {
-  //   if (localStorage.getItem("data") === null) {
-  //     console.log("no hay data");
-  //     localStorage.setItem("data", "[]");
-  //   } else {
-  //     // setCarrito(JSON.parse(localStorage.getItem("data")));
-  //     if (carrito.length !== 0) {
-  //       for(let i = 0; i < carrito.length ; i++) //recorrer carrito.
-  //       console.log(carrito[i]);
-
-  //       // localStorage.setItem("data", JSON.stringify(carrito[i]));
-  //       // setCarrito([JSON.parse(localStorage.getItem("data"))]);
-  //       // console.log(localStorage.setItem("data", JSON.stringify(carrito[i])));
-  //     }
-  //     console.log("nope");
-  //   }
-  // }
-
-  // LOCAL STORAGE
-
   let cantidadFinal = 0;
 
   useEffect(() => {
-    setTimeout(() => {
-      axios
-        .get("https://database-upo-bastidores.herokuapp.com/lienzo")
-        .then((res) => setLienzo(res.data))
-        .then(() => setLoading(false));
-    }, 0);
+    axios
+      .get("https://database-upo-bastidores.herokuapp.com/lienzo")
+      .then((res) => setLienzo(res.data))
+      .then(() => setLoading(false));
   }, [setLienzo]);
 
   useEffect(() => {
-    setTimeout(() => {
-      axios
-        .get("https://database-upo-bastidores.herokuapp.com/madera")
-        .then((res) => setMadera(res.data))
-        .then(() => setLoading(false));
-    }, 0);
+    axios
+      .get("https://database-upo-bastidores.herokuapp.com/madera")
+      .then((res) => setMadera(res.data))
+      .then(() => setLoading(false));
   }, [setLienzo]);
 
   useEffect(() => {
-    handleMayorista();
+    let isMounted = true;
+    setTimeout(() => {
+      if (isMounted) handleMayorista();
+    }, 1000);
+    return () => {
+      isMounted = false;
+    };
   });
 
   function countQuantity() {
+    handleCantidadFinal();
+    handleMayorista();
     const cantidad = document.getElementById("ventas-cantidad");
     const nombre = document.getElementById("select-producto").value;
+    // console.log(cantidadFinal);
+    // console.log(cantidad.value);
+    // console.log((parseInt(cantidad.value) + parseInt(cantidadFinal)));
 
-    if (cantidad.value > 7 || cantidadFinal >= 7) {
+    if (
+      cantidad.value > 7 ||
+      cantidadFinal >= 7 ||
+      parseInt(cantidad.value) + parseInt(cantidadFinal) > 7
+    ) {
       const IdMedida = document.getElementById("select-medida").value;
       const precioMedida = document.getElementById("precio");
       let precioUnidad;
@@ -159,29 +132,11 @@ const Ventas = () => {
   }
 
   function handleMedida() {
-    let IdMedida = document.getElementById("select-medida").value; //agarra la medida seleccionada
     let precioMedida = document.getElementById("precio"); //agarra el div donde iría el precio
     let cantidad = document.getElementById("ventas-cantidad"); //Agarra la cantidad seleccionada
-    let precio;
-    let nombre = document.getElementById("select-producto").value;
-
-    if (cantidadFinal >= 7) {
-      if (nombre === "Bastidor de Madera") {
-        precio = madera[IdMedida - 1].precioMayor;
-      } else if (nombre === "Bastidor de Lienzo") {
-        precio = lienzo[IdMedida - 1].precioMayor;
-      }
-    } else {
-      if (nombre === "Bastidor de Madera") {
-        precio = madera[IdMedida - 1].precioUnidad;
-      } else if (nombre === "Bastidor de Lienzo") {
-        precio = lienzo[IdMedida - 1].precioUnidad;
-      }
-    }
-
-    precioMedida.value = precio;
-    cantidad.value = 1;
-    cantidad.innerHTML = 1;
+    
+    precioMedida.value = 0;
+    cantidad.value = 0;
   }
 
   function AddToCart() {
@@ -208,8 +163,8 @@ const Ventas = () => {
       const cantidades = cantidad;
       const precios = precio;
 
-      if (carrito.length > 0) {
-        carrito.forEach((item) => {
+      if (state.length > 0) {
+        state.forEach((item) => {
           if (item[1].includes(nombre) && item[3].includes(medidas)) {
             //Si el nombre que se encuentra en el elemento 1 del array ya existe en carrito simplemente suma la cantidad al elemento que ya existe
             const cantidadAnterior = parseInt(item[6]);
@@ -230,10 +185,11 @@ const Ventas = () => {
               nuevoPrecio,
             ];
 
-            carrito.splice(carrito.indexOf(item), 1); //Elimina el item anterior antes de agregar el nuevo con la nueva cantidad y el nuevo precio.
+            state.splice(state.indexOf(item), 1); //Elimina el item anterior antes de agregar el nuevo con la nueva cantidad y el nuevo precio.
             defaultValues();
-            setCarrito([...carrito, nuevoItem]);
-            return actions({ type: "setState", payload: carrito });
+            // setCarrito([...carrito, nuevoItem]);
+            actions({ type: "setState", payload: [...state, nuevoItem] });
+            return handleMayorista();
           } else {
             const item2 = [
               id,
@@ -248,8 +204,9 @@ const Ventas = () => {
             ];
 
             defaultValues();
-            setCarrito([...carrito, item2]);
-            return actions({ type: "setState", payload: carrito });
+            // setCarrito([...carrito, item2]);
+            actions({ type: "setState", payload: [...state, item2] });
+            return handleMayorista();
           }
         });
       } else {
@@ -266,14 +223,9 @@ const Ventas = () => {
         ];
 
         defaultValues();
-        // setCarrito([...carrito, item2]);
-        // console.log(carrito);
-        // return setValue(item2)
-        setCarrito([...carrito, item2]);
-        actions({ type: "setState", payload: carrito });
 
-        // x = carrito;
-        // actions({ type: "setState", payload: [...state, x] });
+        actions({ type: "setState", payload: [...state, item2] });
+        return handleMayorista();
       }
     }
   }
@@ -281,7 +233,7 @@ const Ventas = () => {
   const sendEmail = (e) => {
     e.preventDefault();
     const pedido = document.querySelector("#send-pedido");
-    const newCarrito = carrito.map((item) => item.join(" - "));
+    const newCarrito = state.map((item) => item.join(" - "));
     pedido.innerHTML = newCarrito.join(
       "---------------------------------------------------------------------"
     );
@@ -300,7 +252,7 @@ const Ventas = () => {
               "Tu pedido ha sido enviado, pronto nos estaremos comunicando con vos!",
             icon: "success",
           });
-          setCarrito([]);
+          actions({ type: "setState", payload: [] });
         },
         (error) => {
           console.log(error.text);
@@ -309,33 +261,33 @@ const Ventas = () => {
   };
 
   const removeItem = (index) => {
-    carrito.splice(index, 1);
-    setCarrito([...carrito]);
+    state.splice(index, 1);
+    actions({ type: "setState", payload: [...state] });
 
     swal({
       title: "Producto Eliminado",
       icon: "error",
     });
 
-    if (carrito.length > 0) {
+    if (state.length > 0) {
       cantidadFinal = 0;
 
-      for (let i = 0; i < carrito.length; i++) {
-        const cantidad = carrito[i][6];
+      for (let i = 0; i < state.length; i++) {
+        const cantidad = state[i][6];
         cantidadFinal += parseInt(cantidad);
       }
 
       if (cantidadFinal < 8) {
         let cantidad;
         let id;
-        for (let i = 0; i < carrito.length; i++) {
-          let nombre = carrito[i][1];
-          id = carrito[i][0];
-          cantidad = parseInt(carrito[i][6]);
+        for (let i = 0; i < state.length; i++) {
+          let nombre = state[i][1];
+          id = state[i][0];
+          cantidad = parseInt(state[i][6]);
           if (nombre === "Bastidor de Madera") {
-            carrito[i][8] = madera[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
+            state[i][8] = madera[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
           } else if (nombre === "Bastidor de Lienzo") {
-            carrito[i][8] = lienzo[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
+            state[i][8] = lienzo[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
           }
         }
         swal("Sus precios han sido modificados al por menor");
@@ -343,14 +295,14 @@ const Ventas = () => {
       } else {
         let cantidad;
         let id;
-        for (let i = 0; i < carrito.length; i++) {
-          let nombre = carrito[i][1];
-          id = carrito[i][0];
-          cantidad = parseInt(carrito[i][6]);
+        for (let i = 0; i < state.length; i++) {
+          let nombre = state[i][1];
+          id = state[i][0];
+          cantidad = parseInt(state[i][6]);
           if (nombre === "Bastidor de Madera") {
-            carrito[i][8] = madera[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+            state[i][8] = madera[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
           } else if (nombre === "Bastidor de Lienzo") {
-            carrito[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+            state[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
           }
         }
         swal("sus precios están al por mayor");
@@ -362,26 +314,26 @@ const Ventas = () => {
   };
 
   const handleMayorista = () => {
-    //BUG: Al cambiar el producto a lienzo o madera cambia los precios.
-    if (carrito.length > 0) {
-      for (let i = 0; i < carrito.length; i++) {
-        const cantidad = carrito[i][6];
+    if (state.length > 0) {
+      cantidadFinal = 0;
+
+      for (let i = 0; i < state.length; i++) {
+        const cantidad = state[i][6];
         cantidadFinal += parseInt(cantidad);
       }
 
-      if (cantidadFinal > 7) {
+      if (cantidadFinal >= 7) {
         setMayorista(true);
         let cantidad;
-        let id;
 
-        for (let i = 0; i < carrito.length; i++) {
-          let nombre = carrito[i][1];
-          id = carrito[i][0];
-          cantidad = parseInt(carrito[i][6]);
+        for (let i = 0; i < state.length; i++) {
+          let nombre = state[i][1];
+          let id = parseInt(state[i][0]);
+          cantidad = parseInt(state[i][6]);
           if (nombre === "Bastidor de Madera") {
-            carrito[i][8] = madera[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+            state[i][8] = madera[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
           } else if (nombre === "Bastidor de Lienzo") {
-            carrito[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
+            state[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
           }
         }
       } else {
@@ -389,6 +341,15 @@ const Ventas = () => {
       }
     } else {
       setMayorista(false);
+    }
+  };
+
+  const handleCantidadFinal = () => {
+    cantidadFinal = 0;
+
+    for (let i = 0; i < state.length; i++) {
+      const cantidad = state[i][6];
+      cantidadFinal += parseInt(cantidad);
     }
   };
 
@@ -412,18 +373,6 @@ const Ventas = () => {
         <div className="ventas-container">
           <TitleHeader title="Compras por mayor y menor" color="salmon" />
           <InfoCard />
-
-          {/* <button onClick={local}>local</button> */}
-          <ul>
-            {state.map((e, k) => (
-              <li key={k}>{e}</li>
-            ))}
-          </ul>
-
-          <form action="submit" onSubmit={addToGlobal}>
-            <input type="text" id="input" />
-            <button type="submit">Agregar</button>
-          </form>
 
           <p className="ventas-subtitle">
             Si seleccionas mas de 7 unidades accedes a la compra por mayor!
@@ -476,6 +425,7 @@ const Ventas = () => {
                 defaultValue="0"
                 autoComplete="off"
                 onChange={countQuantity}
+                onFocus={(e) => (e.target.value = "")}
               />
             </div>
             <div className="ventas-select">
@@ -503,14 +453,14 @@ const Ventas = () => {
           </div>
 
           <div className="carrito-array" id="carrito-array">
-            {carrito.length > 0 ? (
+            {state.length > 0 ? (
               <label className="ventas-subtitle">Tus productos</label>
             ) : (
               <label className="ventas-subtitle">Tu carrito está vacío</label>
             )}
             <ul className="carrito">
-              {carrito.length > 0 &&
-                carrito.map((item, index) => (
+              {state.length > 0 &&
+                state.map((item, index) => (
                   <li className="carrito-item" key={index}>
                     {item.join(" ")}
                     <button
@@ -525,7 +475,7 @@ const Ventas = () => {
           </div>
 
           <div>
-            {carrito.length > 0 && (
+            {state.length > 0 && (
               <form className="request-container" onSubmit={sendEmail}>
                 <p className="request-title">
                   Por favor completá los siguientes datos para realizar el
@@ -577,12 +527,6 @@ const Ventas = () => {
               </form>
             )}
           </div>
-
-          {/* <div>
-            <button onClick={handleMayorista} className="ventas-enviar">
-              value="Cantidad total"
-            </button>
-          </div> */}
 
           <HomeBtn color="salmon" />
           <Footer />
