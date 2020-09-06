@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Ventas.css";
 
 //import Components
@@ -17,12 +17,54 @@ import Lottie from "react-lottie";
 import trash from "../../Assets/images/trash.svg";
 import animationData from "../../Data/loading5.json";
 
+//Import store
+import Context from "../../store/context";
+
 const Ventas = () => {
   const [lienzo, setLienzo] = useState({});
   const [madera, setMadera] = useState({});
   const [carrito, setCarrito] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mayorista, setMayorista] = useState(false);
+
+  const { state, actions } = useContext(Context);
+
+  const addToGlobal = (e) => {
+    e.preventDefault();
+    // const input = document.querySelector('#input')
+    // actions({type: 'setState', payload: [...state, input.value]})
+    console.log(carrito);
+    actions({ type: "setState", payload: carrito });
+    console.log(state);
+  };
+
+  // LOCAL STORAGE
+
+  // const [value, setValue] = useState(localStorage.getItem("carritoArray") || []);
+
+  // useEffect(() => {
+  //     localStorage.setItem("carritoArray", value);
+  //   }, [value]);
+
+  // function local() {
+  //   if (localStorage.getItem("data") === null) {
+  //     console.log("no hay data");
+  //     localStorage.setItem("data", "[]");
+  //   } else {
+  //     // setCarrito(JSON.parse(localStorage.getItem("data")));
+  //     if (carrito.length !== 0) {
+  //       for(let i = 0; i < carrito.length ; i++) //recorrer carrito.
+  //       console.log(carrito[i]);
+
+  //       // localStorage.setItem("data", JSON.stringify(carrito[i]));
+  //       // setCarrito([JSON.parse(localStorage.getItem("data"))]);
+  //       // console.log(localStorage.setItem("data", JSON.stringify(carrito[i])));
+  //     }
+  //     console.log("nope");
+  //   }
+  // }
+
+  // LOCAL STORAGE
 
   let cantidadFinal = 0;
 
@@ -53,7 +95,6 @@ const Ventas = () => {
     const nombre = document.getElementById("select-producto").value;
 
     if (cantidad.value > 7 || cantidadFinal >= 7) {
-
       const IdMedida = document.getElementById("select-medida").value;
       const precioMedida = document.getElementById("precio");
       let precioUnidad;
@@ -145,7 +186,7 @@ const Ventas = () => {
 
   function AddToCart() {
     const IdMedida = document.getElementById("select-medida").value;
-    let selectedProducto = document.getElementById("select-producto").value;
+    const selectedProducto = document.getElementById("select-producto").value;
     const cantidad = document.querySelector("#ventas-cantidad").value;
     const precio = document.getElementById("precio").value;
     let medida;
@@ -191,7 +232,8 @@ const Ventas = () => {
 
             carrito.splice(carrito.indexOf(item), 1); //Elimina el item anterior antes de agregar el nuevo con la nueva cantidad y el nuevo precio.
             defaultValues();
-            return setCarrito([...carrito, nuevoItem]);
+            setCarrito([...carrito, nuevoItem]);
+            return actions({ type: "setState", payload: carrito });
           } else {
             const item2 = [
               id,
@@ -206,7 +248,8 @@ const Ventas = () => {
             ];
 
             defaultValues();
-            return setCarrito([...carrito, item2]);
+            setCarrito([...carrito, item2]);
+            return actions({ type: "setState", payload: carrito });
           }
         });
       } else {
@@ -223,7 +266,14 @@ const Ventas = () => {
         ];
 
         defaultValues();
-        return setCarrito([...carrito, item2]);
+        // setCarrito([...carrito, item2]);
+        // console.log(carrito);
+        // return setValue(item2)
+        setCarrito([...carrito, item2]);
+        actions({ type: "setState", payload: carrito });
+
+        // x = carrito;
+        // actions({ type: "setState", payload: [...state, x] });
       }
     }
   }
@@ -263,7 +313,7 @@ const Ventas = () => {
     setCarrito([...carrito]);
 
     swal({
-      title: 'Producto Eliminado',
+      title: "Producto Eliminado",
       icon: "error",
     });
 
@@ -362,6 +412,18 @@ const Ventas = () => {
         <div className="ventas-container">
           <TitleHeader title="Compras por mayor y menor" color="salmon" />
           <InfoCard />
+
+          {/* <button onClick={local}>local</button> */}
+          <ul>
+            {state.map((e, k) => (
+              <li key={k}>{e}</li>
+            ))}
+          </ul>
+
+          <form action="submit" onSubmit={addToGlobal}>
+            <input type="text" id="input" />
+            <button type="submit">Agregar</button>
+          </form>
 
           <p className="ventas-subtitle">
             Si seleccionas mas de 7 unidades accedes a la compra por mayor!
