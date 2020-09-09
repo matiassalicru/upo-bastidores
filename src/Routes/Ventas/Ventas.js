@@ -25,6 +25,7 @@ const Ventas = () => {
   const [madera, setMadera] = useState({});
   const [loading, setLoading] = useState(true);
   const [mayorista, setMayorista] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const { state, actions } = useContext(Context);
 
@@ -54,6 +55,10 @@ const Ventas = () => {
     };
   });
 
+  useEffect(() => {
+    handleTotal();
+  });
+
   function countQuantity() {
     handleCantidadFinal();
     handleMayorista();
@@ -66,7 +71,7 @@ const Ventas = () => {
     if (
       cantidad.value > 7 ||
       cantidadFinal >= 7 ||
-      parseInt(cantidad.value) + parseInt(cantidadFinal) > 7
+      parseInt(cantidad.value) + parseInt(cantidadFinal) > 8
     ) {
       const IdMedida = document.getElementById("select-medida").value;
       const precioMedida = document.getElementById("precio");
@@ -134,7 +139,7 @@ const Ventas = () => {
   function handleMedida() {
     let precioMedida = document.getElementById("precio"); //agarra el div donde iría el precio
     let cantidad = document.getElementById("ventas-cantidad"); //Agarra la cantidad seleccionada
-    
+
     precioMedida.value = 0;
     cantidad.value = 0;
   }
@@ -155,6 +160,7 @@ const Ventas = () => {
       return swal({
         title: "Por favor seleccionar una cantidad primero",
         icon: "warning",
+        className: "swal-alert",
       });
     } else {
       const id = IdMedida;
@@ -187,7 +193,7 @@ const Ventas = () => {
 
             state.splice(state.indexOf(item), 1); //Elimina el item anterior antes de agregar el nuevo con la nueva cantidad y el nuevo precio.
             defaultValues();
-            // setCarrito([...carrito, nuevoItem]);
+
             actions({ type: "setState", payload: [...state, nuevoItem] });
             return handleMayorista();
           } else {
@@ -235,9 +241,8 @@ const Ventas = () => {
     const pedido = document.querySelector("#send-pedido");
     const newCarrito = state.map((item) => item.join(" - "));
     pedido.innerHTML = newCarrito.join(
-      "---------------------------------------------------------------------"
+      "---------------------------------------------------------"
     );
-
     emailjs
       .sendForm(
         "gmail",
@@ -251,6 +256,7 @@ const Ventas = () => {
             title:
               "Tu pedido ha sido enviado, pronto nos estaremos comunicando con vos!",
             icon: "success",
+            className: 'swal-alert'
           });
           actions({ type: "setState", payload: [] });
         },
@@ -267,6 +273,7 @@ const Ventas = () => {
     swal({
       title: "Producto Eliminado",
       icon: "error",
+      className: "swal-alert",
     });
 
     if (state.length > 0) {
@@ -290,7 +297,6 @@ const Ventas = () => {
             state[i][8] = lienzo[id - 1].precioUnidad * cantidad; //Precio que se está mostrando.
           }
         }
-        swal("Sus precios han sido modificados al por menor");
         setMayorista(mayorista);
       } else {
         let cantidad;
@@ -305,11 +311,11 @@ const Ventas = () => {
             state[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
           }
         }
-        swal("sus precios están al por mayor");
+        
         setMayorista(true);
       }
     } else {
-      swal("Tu carrito está vacio");
+      swal({ title: "Tu carrito está vacio"});
     }
   };
 
@@ -353,6 +359,20 @@ const Ventas = () => {
     }
   };
 
+  const handleTotal = () => {
+    setTotal(0);
+    if (state.length > 0) {
+      let valor = 0;
+      for (let i = 0; i < state.length; i++) {
+        valor += parseFloat(state[i][8]);
+      }
+      // console.log(valor);
+      setTotal(valor);
+    } else {
+      setTotal(0);
+    }
+  };
+
   //Loading animation from Lottie
   const defaultOptions = {
     loop: true,
@@ -388,9 +408,6 @@ const Ventas = () => {
               >
                 <option value="Bastidor de Lienzo">Bastidores de lienzo</option>
                 <option value="Bastidor de Madera">Bastidores de madera</option>
-                {/* <option value="Marcos">Marcos</option>
-                <option value="Estructuras">Estructuras</option>
-                <option value="MDF entelados">MDF Entelados</option> */}
               </select>
             </div>
             <div className="ventas-select">
@@ -425,7 +442,7 @@ const Ventas = () => {
                 defaultValue="0"
                 autoComplete="off"
                 onChange={countQuantity}
-                onFocus={(e) => (e.target.value = "")}
+                onFocus={(e) => (e.target.value = 0)}
               />
             </div>
             <div className="ventas-select">
@@ -476,55 +493,61 @@ const Ventas = () => {
 
           <div>
             {state.length > 0 && (
-              <form className="request-container" onSubmit={sendEmail}>
-                <p className="request-title">
-                  Por favor completá los siguientes datos para realizar el
-                  pedido.
-                </p>
-                <label htmlFor="input">Nombre*</label>
-                <input
-                  className="request-input"
-                  type="text"
-                  placeholder="Nombre*"
-                  name="from_name"
-                  required={true}
-                />
-                <label htmlFor="input">Email*</label>
-                <input
-                  className="request-input"
-                  type="text"
-                  placeholder="Email*"
-                  name="from_email"
-                  required={true}
-                />
-                <label htmlFor="input">Provincia*</label>
-                <input
-                  className="request-input"
-                  type="text"
-                  placeholder="Provincia y localidad*"
-                  name="from_state"
-                  required={true}
-                />
-                <label htmlFor="input">Teléfono*</label>
-                <input
-                  className="request-input"
-                  type="number"
-                  placeholder="Número de teléfono*"
-                  name="from_num"
-                  required={true}
-                  autoComplete="off"
-                />
-                <textarea
-                  name="message"
-                  id="send-pedido"
-                  style={{ display: "none" }}
-                />
-                <input
-                  className="ventas-enviar"
-                  type="submit"
-                  value="Enviar pedido"
-                />
-              </form>
+              <>
+                <div className="total">
+                  {`Precio Final:
+                  $${total}`}
+                </div>
+                <form className="request-container" onSubmit={sendEmail}>
+                  <p className="request-title">
+                    Por favor completá los siguientes datos para realizar el
+                    pedido.
+                  </p>
+                  <label htmlFor="input">Nombre*</label>
+                  <input
+                    className="request-input"
+                    type="text"
+                    placeholder="Nombre*"
+                    name="from_name"
+                    required={true}
+                  />
+                  <label htmlFor="input">Email*</label>
+                  <input
+                    className="request-input"
+                    type="text"
+                    placeholder="Email*"
+                    name="from_email"
+                    required={true}
+                  />
+                  <label htmlFor="input">Provincia*</label>
+                  <input
+                    className="request-input"
+                    type="text"
+                    placeholder="Provincia y localidad*"
+                    name="from_state"
+                    required={true}
+                  />
+                  <label htmlFor="input">Teléfono*</label>
+                  <input
+                    className="request-input"
+                    type="number"
+                    placeholder="Número de teléfono*"
+                    name="from_num"
+                    required={true}
+                    autoComplete="off"
+                  />
+                  <textarea
+                    name="message"
+                    id="send-pedido"
+                    style={{ display: "none" }}
+                  />
+                  <input
+                    className="ventas-enviar"
+                    type="submit"
+                    value="Enviar pedido"
+                  />
+                </form>
+              </>
             )}
           </div>
 

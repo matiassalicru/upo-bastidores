@@ -8,16 +8,29 @@ import InfoCard from "../Componentes/InfoCard/InfoCard";
 import Footer from "../Componentes/Footer/Footer";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Producto from "./Producto/Producto";
-import Slider from '../Componentes/Slider/Slider';
+import Slider from "../Componentes/Slider/Slider";
 
 //import assets
-import Images from '../../Data/productos';
-import cuadro1 from '../../Assets/images/producto1.jpeg';
+import Images from "../../Data/productos";
+import cuadro1 from "../../Assets/images/producto1.jpeg";
 import wide3 from "../../Assets/images/wide3.jpeg";
 
-
-
 const Productos = () => {
+  const descriptions = [
+    [
+      "Bastidores entelados: productos elaborados con maderas de excelente calidad, seleccionadas para que las obras puedan perdurar en el tiempo de una forma intacta. Las estructuras internas del bastidor son reforzadas, permitiendo realizar una excelente tensión del textil implementado para luego poder ser imprimado y poder asi finalizar un producto listo para pintar...",
+      "Descripción del producto:",
+      "-Perfil alto 5cm /perfil bajo 2.5 cm",
+      "-lienzo puro algodon-imprimacion en latex",
+      "-grano medio",
+    ],
+    [
+      "Bastidores de Madera: Bastidores con estructuras reforzadas de madera de excelente calidad y base de trabajo en mdf  de 3mm. Segun la medida se toma los recaudos necesarios por medio de refuerzo para evitar que la obra se deforme o pansee",
+      "Descripción del producto",
+      "-Estructura de madera",
+      "-base de trabajo en mdf 3mm",
+    ],
+  ];
 
   return (
     <div className="productos-container">
@@ -26,33 +39,38 @@ const Productos = () => {
       <div className="video">
         <video src={video} autoPlay={true} loop={true} />
       </div>
-      <div className="productos-description">
+      {/* <div className="productos-description">
         Nuestros productos están creados con la mayor delicadeza llevando el
         diseño y la perfección hasta su punto más alto, utlizamos como
         materiales las maderas y los lienzos para ayudarte a inspirarte a la
         hora de crear tu arte, dejanos formar parte de tu proceso creativo con
         nuestros productos elaborados con amor y pasión!
-      </div>
+      </div> */}
 
       <div className="productos-producto-container">
         <Producto
           title="Bastidor de Lienzo"
           image={cuadro1}
-          description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+          description={descriptions[0][0]}
+          detail1={descriptions[0][1]}
+          detail2={descriptions[0][2]}
+          detail3={descriptions[0][3]}
+          detail4={descriptions[0][4]}
           color="salmon"
         />
         <Producto
           title="Bastidor de Madera"
           image={wide3}
-          description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+          description={descriptions[1][0]}
+          detail1={descriptions[1][1]}
+          detail2={descriptions[1][2]}
+          detail3={descriptions[1][3]}
           color="green"
         />
-
       </div>
-      <Slider images={Images} title='Más fotos de nuestros productos'/>
+      <Slider images={Images} title="Más fotos de nuestros productos" />
       <HomeBtn color="red" />
       <Footer />
-      
     </div>
   );
 };

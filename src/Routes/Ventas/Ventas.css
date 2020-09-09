@@ -70,7 +70,7 @@
     border: none;
     border-radius: 10px;
     outline: none;
-    background-color: #DF3B5750;
+    background-color: #42393b50;
 }
 
 .select-med{
@@ -88,7 +88,6 @@
     border-radius: 20px;
     cursor: pointer;
     outline: none;
-    transition: all 0.2s ;
     width: 40vw;
     text-transform: uppercase;
     box-shadow: 4px 5px 7px #a7a7a7;
@@ -96,9 +95,14 @@
     font-weight: 600;
     font-size: 1.2rem;
     text-align: center;
+    transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .ventas-agregar:active{
+    transform: translateY(5px);
+}
+
+.ventas-agregar:hover{
     transform: translateY(5px);
 }
 
@@ -233,4 +237,26 @@ input[type=number]::-webkit-outer-spin-button {
     color: tomato;
     font-size: 5rem;
     opacity: 0.8;
+}
+
+.total{
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Roboto';
+    font-size: 1.2rem;
+    background-color: #DF3B5730;
+    font-weight: 400;
+    border-radius: 20px;
+    width: 60%;
+    text-align: center;
+}
+
+.swal-button{
+    color: #fff;
+    background-color: #be88cc;
+}
+
+.swal-button:not([disabled]):hover{
+    background-color: rgb(190, 166, 230);
+
 }

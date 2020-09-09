@@ -1,5 +1,5 @@
 .productos-producto-container{
-    margin-top: 100px;
+    /* margin-top: 100px; */
     display: flex;
     flex-direction: column;
     align-self: flex-end;
@@ -26,13 +26,18 @@
     text-transform: uppercase;
     font-size: 2rem;
     margin-bottom: 20px;
+    font-family: 'Roboto';
+    font-weight: 400;
 }
 
 .title-img>img{
     width: 400px;
+    border-radius: 20px;
 }
 
 .producto-description{
+    display: block;
+    width: auto;
     padding: 80px 100px;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -43,6 +48,10 @@
     color: #fff;
     font-weight: 300;
     align-self: center;
+}
+
+.separator{
+    margin-top: 50px;
 }
 
 

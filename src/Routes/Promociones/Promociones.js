@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import "./Promociones.css";
 
 //Components
@@ -6,56 +7,103 @@ import TitleHeader from "../Componentes/TitleHeader/TitleHeader";
 import InfoCard from "../Componentes/InfoCard/InfoCard";
 import Footer from "../Componentes/Footer/Footer";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
-import PromocionR from "./Promocion-r";
-import PromocionL from "./Promocion-l";
+import Promocion from "./Promocion";
+import Context from "../../store/context";
+
+//Photos
+import cuadro1 from "../../Assets/images/producto1.jpeg";
 
 function Promociones() {
-  const promocion1 = [
-    "7 BASTIDORES PEQUEÑOS EN LIENZO",
-    "4 12X12 CM",
-    "3 15X15 CM",
-  ];
-  const promocion2 = ["5 BASTIDORES EN LIENZO TAMAÑO A4", "20x30 CM"];
-  const promocion3 = ["4 BASTIDORES EN LIENZO", "60x80 cm"];
-  const promocion4 = [
-    "6 bastidores cuadrados en lienzo",
-    "2 30X30 CM2",
-    "2 40x40 cm2",
-    "2 50x50 cm ",
+  const promociones = [
+    ["6 BASTIDORES EN LIENZO", "2 20X20 CM", "2 20X30 CM", "2 20x40 CM"],
+    ["6 BASTIDORES EN LIENZO", "3 60x40 CM"],
+    ["6 BASTIDORES EN LIENZO", "3 100x30 CM"],
+    ["6 BASTIDORES EN LIENZO", " 30X70 CM"],
+    ["6 BASTIDORES EN LIENZO", " 40x40 CM"],
+    ["10 BASTIDORES EN LIENZO", " 15X15 CM"],
   ];
 
+  const precios = ["$2000", "$3000", "$2000",'$2700','$2400','$2000'];
+
+  const { state } = useContext(Context);
+
+  let history = useHistory();
+  const goToCart = () => history.push("/compras");
+
   return (
-    <div className='promociones-container'>
+    <div className="promociones-container">
       <TitleHeader color="green" title="Ofertas y Promociones" />
       <InfoCard />
+      {state.length >= 0 && (
+        <p onClick={goToCart} className="back-to-cart">
+          Ir al carrito
+        </p>
+      )}
       <div className="promociones-cards">
-        <PromocionR
-          title="PROMO x4"
-          description={promocion1.map((e, i) => (
-            <p key={i}>{e}</p>
-          ))}
+        <Promocion
+          id="1"
+          title="PROMO 1"
+          description1={promociones[0][0]}
+          description2={promociones[0][1]}
+          description3={promociones[0][2]}
+          description4={promociones[0][3]}
+          precio={precios[0]}
           color="orange"
+          direction="forward"
+          image={cuadro1}
         />
-        <PromocionL
-          title="PROMO x6"
-          description={promocion2.map((e, i) => (
-            <p key={i}>{e}</p>
-          ))}
-          color="red"
-        />
-        <PromocionR
-          title="PROMO x4"
-          description={promocion3.map((e, i) => (
-            <p key={i}>{e}</p>
-          ))}
+        <Promocion
+          id="2"
+          title="PROMO 2"
+          description1={promociones[1][0]}
+          description2={promociones[1][1]}
+          description3={promociones[1][2]}
+          precio={precios[1]}
           color="salmon"
+          direction="reverse"
+          image={cuadro1}
         />
-        <PromocionL
-          title="PROMO x6"
-          description={promocion4.map((e, i) => (
-            <p key={i}>{e}</p>
-          ))}
+        <Promocion
+          id="3"
+          title="PROMO 3"
+          description1={promociones[2][0]}
+          description2={promociones[2][1]}
+          description3={promociones[2][2]}
+          precio={precios[2]}
           color="green"
+          direction="forward"
+          image={cuadro1}
+        />
+        <Promocion
+          id="4"
+          title="PROMO 4"
+          description1={promociones[3][0]}
+          description2={promociones[3][1]}
+          description3={promociones[3][2]}
+          precio={precios[3]}
+          color="red"
+          direction="reverse"
+          image={cuadro1}
+        />
+        <Promocion
+          id="5"
+          title="PROMO 5"
+          description1={promociones[4][0]}
+          description2={promociones[4][1]}
+          precio={precios[4]}
+          color="orange"
+          direction="forward"
+          image={cuadro1}
+        />
+        <Promocion
+          id="6"
+          title="PROMO 6"
+          description1={promociones[5][0]}
+          description2={promociones[5][1]}
+          precio={precios[5]}
+          color="salmon"
+          direction="reverse"
+          image={cuadro1}
         />
       </div>
       <HomeBtn color="green" />
