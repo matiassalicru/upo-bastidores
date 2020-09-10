@@ -8,8 +8,7 @@ import location from "../../../Assets/images/location.svg";
 function Footer() {
   return (
     <div className="footer-container">
-      <ul className='list'>
-        <li className="item">
+        <div className="item">
           <img className='icon-social' src={insta} alt="*" />
           <a
             href="https://www.instagram.com/upo_bastidores/"
@@ -18,8 +17,8 @@ function Footer() {
           >
             Upo Bastidores
           </a>
-        </li>
-        <li className="item">
+        </div>
+        <div className="item">
           <img className='icon-social' src={fb} alt="*" />
           <a
             href="https://www.facebook.com/upo_bastidores-101914031541600"
@@ -28,18 +27,18 @@ function Footer() {
           >
             Upo Bastidores
           </a>
-        </li>
-        <li className="item">
+        </div>
+        <div className="item">
           <img className='icon-social' src={wsp} alt="*" />
           <a
-            href="https://wa.link/x16smx"
+            href="https://wa.div/x16smx"
             target="_Blank"
             rel="noopener noreferrer"
           >
             3517174900
           </a>
-        </li>
-        <li className="item">
+        </div>
+        <div className="item">
           <img className='icon-social' src={location} alt="*" />
           <a
             href="https://www.google.com/maps/place/C%C3%B3rdoba/data=!4m2!3m1!1s0x9432985f478f5b69:0xb0a24f9a5366b092?sa=X&ved=2ahUKEwic7M-6jKvrAhWkHLkGHQYqBgYQ8gEwAHoECAsQAQ"
@@ -48,9 +47,8 @@ function Footer() {
           >
             Cordoba, Argentina
           </a>
-        </li>
-      </ul>
-    </div>
+        </div>
+      </div>
   );
 }
 

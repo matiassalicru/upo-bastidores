@@ -38,19 +38,18 @@
 
 .footer-container {
   display: flex;
-  margin: 50px 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 50px auto;
   background-color: #f4f4f4;
 }
 
-.list{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  list-style: none;
-}
 
 .item {
   display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 10px 15px;
   font-family: 'Roboto';
 }
@@ -62,4 +61,5 @@
 
 .icon-social{
   width: 25px;
+  margin-right: 10px;
 }
