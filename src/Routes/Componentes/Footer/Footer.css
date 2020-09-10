@@ -27,34 +27,11 @@
   color: #1b1b1b;
 }
 
-@media only screen and (max-width: 600px) {
+@media all and (max-width: 600px) {
   .footer-container {
-    display: flex;
-    justify-content: initial;
-    align-items: initial;
-    box-sizing: initial;
-    flex-wrap: wrap;
-    width: 80%;
-    list-style: none;
-    margin: auto;
-    /* background-color: #f4f4f4; */
-    background-color: khaki;
+    display: none;
+    
   }
 
-  .item {
-    display: flex;
-    margin: 5px 10px;
-  }
-
-  .item > img {
-    width: 25px;
-    margin: 0;
-  }
-
-  .item > a {
-    font-size: 18px;
-    font-family: "Roboto";
-    font-weight: 200;
-  }
-
+  
 }
