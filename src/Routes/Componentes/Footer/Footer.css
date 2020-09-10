@@ -36,6 +36,30 @@
   
 } */
 
+.footer-container {
+  display: flex;
+  width: 100%;
+  margin: 50px 0;
+  background-color: #f4f4f4;
+}
+
+.list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  margin: 10px 15px;
+  font-family: 'Roboto';
+}
+
+.item a {
+  text-decoration: none;
+  color: #1b1b1b;
+}
 
 .icon-social{
   width: 25px;

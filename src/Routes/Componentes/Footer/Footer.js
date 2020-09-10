@@ -8,7 +8,7 @@ import location from "../../../Assets/images/location.svg";
 function Footer() {
   return (
     <div className="footer-container">
-      <ul>
+      <ul className='list'>
         <li className="item">
           <img className='icon-social' src={insta} alt="*" />
           <a
