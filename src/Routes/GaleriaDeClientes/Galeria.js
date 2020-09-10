@@ -6,10 +6,10 @@ import TitleHeader from "../Componentes/TitleHeader/TitleHeader";
 import InfoCard from "../Componentes/InfoCard/InfoCard";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Footer from "../Componentes/Footer/Footer";
-import Carousel from "../Componentes/Slider/Slider";
 
 //Import images
 import Images from "../../Data/galeria";
+import Gallery from "../Componentes/Slider/Gallery";
 
 
 const Galeria = () => {
@@ -28,7 +28,8 @@ const Galeria = () => {
           nobis porro quasi repellat numquam unde necessitatibus reprehenderit
           enim aliquam dolor qui aspernatur.
         </div>
-      <Carousel images={Images}  title='Galería de imágenes'/>
+
+      <Gallery images={Images} title='Obras de nuestros clientes' footer='algo'/>
 
       <HomeBtn color="red" />
       <Footer />

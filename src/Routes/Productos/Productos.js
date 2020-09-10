@@ -8,12 +8,12 @@ import InfoCard from "../Componentes/InfoCard/InfoCard";
 import Footer from "../Componentes/Footer/Footer";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Producto from "./Producto/Producto";
-import Slider from "../Componentes/Slider/Slider";
 
 //import assets
 import Images from "../../Data/productos";
 import cuadro1 from "../../Assets/images/producto1.jpeg";
 import wide3 from "../../Assets/images/wide3.jpeg";
+import Gallery from "../Componentes/Slider/Gallery";
 
 const Productos = () => {
   const descriptions = [
@@ -68,7 +68,7 @@ const Productos = () => {
           color="green"
         />
       </div>
-      <Slider images={Images} title="Más fotos de nuestros productos" />
+      <Gallery images={Images} title='Mas fotos de nuestros productos'/>
       <HomeBtn color="red" />
       <Footer />
     </div>
