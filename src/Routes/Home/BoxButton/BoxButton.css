@@ -69,5 +69,7 @@
   .boxButton-container {
     width: 80vw;
     height: 100px;
+    margin: 0.5rem;
+
   }
 }
