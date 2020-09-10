@@ -1,4 +1,4 @@
-.footer-container {
+/* .footer-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,4 +34,9 @@
   }
 
   
+} */
+
+
+.icon-social{
+  width: 25px;
 }
