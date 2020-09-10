@@ -30,3 +30,10 @@
     text-decoration: none;
     color: #1b1b1b;
 }
+
+@media only screen and (max-width: 600px) {
+  .item>p{
+    font-size: 1rem;
+    margin: 0 30px;
+  }
+}
