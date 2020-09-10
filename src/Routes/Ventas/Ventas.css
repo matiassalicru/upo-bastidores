@@ -260,3 +260,10 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: rgb(190, 166, 230);
 
 }
+
+@media only screen and (max-width: 600px){
+    .ventas-subtitle{
+    font-size: 1rem;
+    margin: 35px 0;
+}
+}

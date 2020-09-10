@@ -11,7 +11,6 @@ import insta from "../../Assets/images/insta.svg";
 import location from "../../Assets/images/location.svg";
 
 function Contact() {
-
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -37,40 +36,23 @@ function Contact() {
       <TitleHeader title="Contacto" color="orange" />
       <InfoCard />
       <h1 className="ventas-subtitle">
-        Podés enviarnos un mensaje a través de nuestras redes!
+        Podés enviarnos un mensaje a través de nuestras redes sociales!
       </h1>
-      <ul className="contact-list">
-        <li className="item">
-          <img src={insta} alt="*" />
-          <p>
-            <a href="https://www.instagram.com/upo_bastidores/">
-              Upo Bastidores
-            </a>
-          </p>
-        </li>
-        <li className="item">
-          <img src={fb} alt="*" />
-          <p>
-            <a href="https://www.facebook.com/upo_bastidores-101914031541600">
-              Upo Bastidores
-            </a>
-          </p>
-        </li>
-        <li className="item">
-          <img src={wsp} alt="*" />
-          <p>
-            <a href="https://wa.link/x16smx">3517174900</a>
-          </p>
-        </li>
-        <li className="item">
-          <img src={location} alt="*" />
-          <p>
-            <a href="https://www.google.com/maps/place/C%C3%B3rdoba/data=!4m2!3m1!1s0x9432985f478f5b69:0xb0a24f9a5366b092?sa=X&ved=2ahUKEwic7M-6jKvrAhWkHLkGHQYqBgYQ8gEwAHoECAsQAQ">
-              Cordoba, Argentina
-            </a>
-          </p>
-        </li>
-      </ul>
+      <div className="social-icons-container">
+        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
+          <img className="contact-social-image" src={fb} alt="" />
+        </a>
+        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
+          <img className="contact-social-image" src={insta} alt="" />
+        </a>
+        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
+          <img className="contact-social-image" src={wsp} alt="" />
+        </a>
+        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
+          <img className="contact-social-image" src={location} alt="" />
+        </a>
+      </div>
+      <h2 className="ventas-subtitle">O podés enviarnos un mail</h2>
       <form className="form-container" onSubmit={sendEmail}>
         <p className="form-title">Contactanos!</p>
         <div className="form-inputs-container">
@@ -90,7 +72,7 @@ function Contact() {
           </div>
           <textarea
             className="input-user"
-             placeholder="Mensaje*"
+            placeholder="Mensaje*"
             name="message"
             id="send-pedido"
           />
