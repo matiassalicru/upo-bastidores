@@ -16,4 +16,14 @@
   text-transform: uppercase;
 }
 
+@media only screen and (max-width: 600px){
 
+  .title-header-container {
+  height: 15vh;
+  margin: 3rem 0;
+}
+
+  .title-header {
+  font-size: 1.5rem;
+}
+}

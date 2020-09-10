@@ -1,29 +1,35 @@
-.HomeBtn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 8vw;
-    margin: auto;
-    padding: 20px 60px;
-    border-radius: 10px;
-    text-transform: uppercase;
-    font-family: 'Roboto';
-    font-size: 1.5rem;
-    box-shadow: 4px 5px 5px #00000099;
-    transition: all 0.2s ease-in-out;
-    
+.HomeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8vw;
+  margin: auto;
+  padding: 20px 60px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  font-family: "Roboto";
+  font-size: 1.5rem;
+  box-shadow: 4px 5px 5px #00000099;
+  transition: all 0.2s ease-in-out;
 }
 
-.HomeBtn:active{
-    transform: translateY(5px);
+.HomeBtn:active {
+  transform: translateY(5px);
 }
 
-.HomeBtn:hover{
-    transform: scale(1.05);
+.HomeBtn:hover {
+  transform: scale(1.05);
 }
 
-.link{
-    text-decoration: none;
-    color: #ffffff;
-    margin-top: 100px;
+.link {
+  text-decoration: none;
+  color: #ffffff;
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .HomeBtn {
+    padding: 10px 50px;
+    font-size: 1.2rem;
+  }
 }
