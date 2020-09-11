@@ -62,8 +62,9 @@
   
   .box-description {
     font-size: 0.6rem;
+    font-weight: 300;
     margin-top: 10px;
-    width: 50px;
+    width: 60px;
   }
 
   .box-icon {

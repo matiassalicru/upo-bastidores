@@ -39,17 +39,14 @@ function Contact() {
         Podés enviarnos un mensaje a través de nuestras redes sociales!
       </h1>
       <div className="social-icons-container">
-        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
+        <a href="https://www.facebook.com/upo_bastidores-101914031541600" target='_blank' rel='noopener noreferrer'>
           <img className="contact-social-image" src={fb} alt="" />
         </a>
-        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
+        <a href="https://www.instagram.com/upo_bastidores/" target='_blank' rel='noopener noreferrer'>
           <img className="contact-social-image" src={insta} alt="" />
         </a>
-        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
+        <a href="https://wa.link/x16smx" target='_blank' rel='noopener noreferrer'>
           <img className="contact-social-image" src={wsp} alt="" />
-        </a>
-        <a href="https://www.facebook.com/upo_bastidores-101914031541600">
-          <img className="contact-social-image" src={location} alt="" />
         </a>
       </div>
       <h2 className="ventas-subtitle">O podés enviarnos un mail</h2>

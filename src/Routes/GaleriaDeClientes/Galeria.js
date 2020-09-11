@@ -20,13 +20,7 @@ const Galeria = () => {
         <TitleHeader color="red" title="Galería de clientes" />
         <InfoCard />
         <div className="galeria-description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, fuga
-          earum nesciunt qui, recusandae, deleniti ratione aliquam repellat est
-          labore dicta eligendi omnis inventore minima iusto harum magnam ad!
-          Suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Quod eum nostrum assumenda vitae quae dignissimos, consequuntur eaque
-          nobis porro quasi repellat numquam unde necessitatibus reprehenderit
-          enim aliquam dolor qui aspernatur.
+          Acá te mostramos algunas de las obras de los artistas que deciden elegirnos para formar parte de su arte.
         </div>
 
       <Gallery images={Images} title='Obras de nuestros clientes' footer='algo'/>
