@@ -162,10 +162,10 @@ input {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 50px auto;
   padding: 20px;
   background-color: #c4c4c450;
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .request-title {
@@ -314,9 +314,12 @@ input[type="number"]::-webkit-outer-spin-button {
 
   .request-container {
     border-radius: 0px;
+    margin: 50px auto;
+    width: 100%;
+    flex-wrap: wrap;
   }
 
-  .request-title{
+  .request-title {
     font-size: 1rem;
     padding: 10px;
     margin: 10px;
@@ -326,18 +329,33 @@ input[type="number"]::-webkit-outer-spin-button {
     font-size: 0.8rem;
   }
 
-  .ventas-enviar{
+  .ventas-enviar {
     font-size: 0.8rem;
     padding: 17px 80px;
   }
 
-
-  .request-input{
+  .request-input {
     padding: 10px;
   }
-  
-.request-input::placeholder {
-  font-size: 0.8rem;
-  text-align: start;
-}
+
+  .request-input::placeholder {
+    font-size: 0.8rem;
+    text-align: start;
+  }
+
+  .ventas-select-producto {
+    /* width: 100%; */
+  }
+
+  .ventas-select-producto select,
+  input {
+    /* width: auto; */
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #df3b5750;
+    text-align: start;
+    appearance: none;
+  }
 }

@@ -238,6 +238,9 @@ const Ventas = () => {
 
   const sendEmail = (e) => {
     e.preventDefault();
+  
+    document.querySelector(".ventas-enviar").setAttribute("disabled", true);
+
     const pedido = document.querySelector("#send-pedido");
     const newCarrito = state.map((item) => item.join(" - "));
     pedido.innerHTML = newCarrito.join(
@@ -256,7 +259,7 @@ const Ventas = () => {
             title:
               "Tu pedido ha sido enviado, pronto nos estaremos comunicando con vos!",
             icon: "success",
-            className: 'swal-alert'
+            className: "swal-alert",
           });
           actions({ type: "setState", payload: [] });
         },
@@ -311,11 +314,11 @@ const Ventas = () => {
             state[i][8] = lienzo[id - 1].precioMayor * cantidad; //Precio que se está mostrando.
           }
         }
-        
+
         setMayorista(true);
       }
     } else {
-      swal({ title: "Tu carrito está vacio"});
+      swal({ title: "Tu carrito está vacio" });
     }
   };
 
@@ -372,6 +375,7 @@ const Ventas = () => {
       setTotal(0);
     }
   };
+
 
   //Loading animation from Lottie
   const defaultOptions = {
