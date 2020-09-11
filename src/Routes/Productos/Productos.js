@@ -28,7 +28,7 @@ const Productos = () => {
       "Bastidores de Madera: Bastidores con estructuras reforzadas de madera de excelente calidad y base de trabajo en mdf  de 3mm. Segun la medida se toma los recaudos necesarios por medio de refuerzo para evitar que la obra se deforme o pansee",
       "Descripción del producto",
       "-Estructura de madera",
-      "-base de trabajo en mdf 3mm",
+      "-Base de trabajo en MDF 3mm",
     ],
   ];
 
@@ -39,13 +39,6 @@ const Productos = () => {
       <div className="video">
         <video src={video} autoPlay={true} loop={true} />
       </div>
-      {/* <div className="productos-description">
-        Nuestros productos están creados con la mayor delicadeza llevando el
-        diseño y la perfección hasta su punto más alto, utlizamos como
-        materiales las maderas y los lienzos para ayudarte a inspirarte a la
-        hora de crear tu arte, dejanos formar parte de tu proceso creativo con
-        nuestros productos elaborados con amor y pasión!
-      </div> */}
 
       <div className="productos-producto-container">
         <Producto
