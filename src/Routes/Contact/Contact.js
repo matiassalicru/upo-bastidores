@@ -8,7 +8,6 @@ import Footer from "../Componentes/Footer/Footer";
 import fb from "../../Assets/images/fb.svg";
 import wsp from "../../Assets/images/wsp.svg";
 import insta from "../../Assets/images/insta.svg";
-import location from "../../Assets/images/location.svg";
 
 function Contact() {
   const sendEmail = (e) => {
