@@ -30,7 +30,7 @@ const Ventas = () => {
   const { state, actions } = useContext(Context);
 
   let cantidadFinal = 0;
-
+  
   useEffect(() => {
     axios
       .get("https://database-upo-bastidores.herokuapp.com/lienzo")
@@ -375,7 +375,6 @@ const Ventas = () => {
       setTotal(0);
     }
   };
-
 
   //Loading animation from Lottie
   const defaultOptions = {
