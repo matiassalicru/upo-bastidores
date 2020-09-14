@@ -13,7 +13,7 @@ import Producto from "./Producto/Producto";
 import Images from "../../Data/productos";
 import cuadro1 from "../../Assets/images/producto1.jpeg";
 import wide3 from "../../Assets/images/wide3.jpeg";
-import Gallery from "../Componentes/Slider/Gallery";
+import Gallery from "../Componentes/Gallery/Gallery";
 
 const Productos = () => {
   const descriptions = [

@@ -34,7 +34,7 @@
 .social-icons-container{
     display: flex;
     justify-content: space-evenly;
-    width: 100vw;
+    width: 100%;
 }
 
 .form-inputs-container{

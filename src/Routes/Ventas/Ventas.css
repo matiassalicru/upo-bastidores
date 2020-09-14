@@ -343,10 +343,6 @@ input[type="number"]::-webkit-outer-spin-button {
     text-align: start;
   }
 
-  .ventas-select-producto {
-    /* width: 100%; */
-  }
-
   .ventas-select-producto select,
   input {
     /* width: auto; */

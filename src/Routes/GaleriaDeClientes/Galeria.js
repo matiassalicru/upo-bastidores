@@ -1,5 +1,7 @@
 import React from "react";
 import "./Galeria.css";
+import { useHistory } from "react-router-dom";
+
 
 //import Components.
 import TitleHeader from "../Componentes/TitleHeader/TitleHeader";
@@ -9,24 +11,41 @@ import Footer from "../Componentes/Footer/Footer";
 
 //Import images
 import Images from "../../Data/galeria";
-import Gallery from "../Componentes/Slider/Gallery";
-
+import Gallery from "../Componentes/Gallery/Gallery";
 
 const Galeria = () => {
+
+    let history = useHistory();
+    const goToContact = () => history.push("/contacto");
+    const goToCompras = () => history.push("/compras");
 
   return (
     <>
       <div className="galeria-container">
         <TitleHeader color="red" title="Galería de clientes" />
         <InfoCard />
+        
         <div className="galeria-description">
-          Acá te mostramos algunas de las obras de los artistas que deciden elegirnos para formar parte de su arte.
+          <p>
+            Acá te mostramos algunas de las obras de los artistas que deciden
+            elegirnos para sus pinturas
+            <br /> Si las obras de nuestros clientes te inspiran no dudes en
+            contactarnos y obtener tu propio bastidor
+          </p>
+          <div className="galeria-buttons">
+            <button onClick={goToContact}>Contactanos</button>
+            <button onClick={goToCompras}>Comprar</button>
+          </div>
         </div>
 
-      <Gallery images={Images} title='Obras de nuestros clientes' footer='algo'/>
+        <Gallery
+          images={Images}
+          title="Obras de nuestros clientes"
+          footer="algo"
+        />
 
-      <HomeBtn color="red" />
-      <Footer />
+        <HomeBtn color="red" />
+        <Footer />
       </div>
     </>
   );
