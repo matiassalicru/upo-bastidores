@@ -5,6 +5,7 @@ import BoxButton from './BoxButton/BoxButton';
 import Footer from '../Componentes/Footer/Footer';
 import Subheader from './Subheader/Subheader'
 import {Link} from 'react-router-dom';
+import { ChatBubble } from '../Componentes/Chat/ChatBubble';
 
 export default function Home () {
 
@@ -14,6 +15,8 @@ export default function Home () {
 
     return (
       <>
+        <ChatBubble />
+
         <Header />
         <InfoCard />
         <Subheader title="Trabajamos con Pasión! 💪🏼🤍" />
@@ -38,7 +41,6 @@ export default function Home () {
           </Link>
         </div>
         <Footer />
-          
       </>
     );
-}
+  }

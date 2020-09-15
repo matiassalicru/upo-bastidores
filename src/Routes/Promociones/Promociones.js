@@ -9,9 +9,15 @@ import Footer from "../Componentes/Footer/Footer";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Promocion from "./Promocion";
 import Context from "../../store/context";
+import { ChatBubble } from "../Componentes/Chat/ChatBubble";
 
 //Photos
-import cuadro1 from "../../Assets/images/producto1.jpeg";
+import cuadro2 from "../../Assets/images/producto1.png";
+import cuadro3 from "../../Assets/images/producto2.png";
+import cuadro4 from "../../Assets/images/producto3.png";
+import cuadro5 from "../../Assets/images/wide3.png";
+
+
 
 function Promociones() {
   const promociones = [
@@ -32,11 +38,12 @@ function Promociones() {
 
   return (
     <div className="promociones-container">
+      <ChatBubble/>
       <TitleHeader color="green" title="Ofertas y Promociones" />
       <InfoCard />
       {state.length >= 0 && (
-        <p onClick={goToCart} className="back-to-cart">
-          Ir al carrito
+        <p onClick={goToCart} className="galeria-buttons">
+          <button>Ir al carrito</button>
         </p>
       )}
       <div className="promociones-cards">
@@ -50,7 +57,7 @@ function Promociones() {
           precio={precios[0]}
           color="orange"
           direction="forward"
-          image={cuadro1}
+          image={cuadro2}
         />
         <Promocion
           id="2"
@@ -61,7 +68,7 @@ function Promociones() {
           precio={precios[1]}
           color="salmon"
           direction="reverse"
-          image={cuadro1}
+          image={cuadro5}
         />
         <Promocion
           id="3"
@@ -72,7 +79,7 @@ function Promociones() {
           precio={precios[2]}
           color="green"
           direction="forward"
-          image={cuadro1}
+          image={cuadro3}
         />
         <Promocion
           id="4"
@@ -83,7 +90,7 @@ function Promociones() {
           precio={precios[3]}
           color="red"
           direction="reverse"
-          image={cuadro1}
+          image={cuadro2}
         />
         <Promocion
           id="5"
@@ -93,7 +100,7 @@ function Promociones() {
           precio={precios[4]}
           color="orange"
           direction="forward"
-          image={cuadro1}
+          image={cuadro4}
         />
         <Promocion
           id="6"
@@ -103,7 +110,7 @@ function Promociones() {
           precio={precios[5]}
           color="salmon"
           direction="reverse"
-          image={cuadro1}
+          image={cuadro5}
         />
       </div>
       <HomeBtn color="green" />

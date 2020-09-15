@@ -6,6 +6,8 @@ import TitleHeader from "../Componentes/TitleHeader/TitleHeader";
 import InfoCard from "../Componentes/InfoCard/InfoCard";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Footer from "../Componentes/Footer/Footer";
+import { ChatBubble } from "../Componentes/Chat/ChatBubble";
+
 
 //Import libraries
 import axios from "axios";
@@ -30,7 +32,7 @@ const Ventas = () => {
   const { state, actions } = useContext(Context);
 
   let cantidadFinal = 0;
-  
+
   useEffect(() => {
     axios
       .get("https://database-upo-bastidores.herokuapp.com/lienzo")
@@ -238,7 +240,7 @@ const Ventas = () => {
 
   const sendEmail = (e) => {
     e.preventDefault();
-  
+
     document.querySelector(".ventas-enviar").setAttribute("disabled", true);
 
     const pedido = document.querySelector("#send-pedido");
@@ -331,7 +333,7 @@ const Ventas = () => {
         cantidadFinal += parseInt(cantidad);
       }
 
-      if (cantidadFinal >= 7) {
+      if (cantidadFinal > 7) {
         setMayorista(true);
         let cantidad;
 
@@ -369,7 +371,6 @@ const Ventas = () => {
       for (let i = 0; i < state.length; i++) {
         valor += parseFloat(state[i][8]);
       }
-      // console.log(valor);
       setTotal(valor);
     } else {
       setTotal(0);
@@ -384,16 +385,18 @@ const Ventas = () => {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
+
   };
 
   return (
     <>
       {loading ? (
         <div className="loading-screen">
-          <Lottie options={defaultOptions} height={400} width={400} />
+          <Lottie options={defaultOptions} height={200} width={200} />
         </div>
       ) : (
         <div className="ventas-container">
+          <ChatBubble/>
           <TitleHeader title="Compras por mayor y menor" color="salmon" />
           <InfoCard />
 

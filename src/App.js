@@ -15,9 +15,6 @@ import Promociones from "./Routes/Promociones/Promociones";
 import Contact from "./Routes/Contact/Contact";
 import Galeria from "./Routes/GaleriaDeClientes/Galeria";
 
-//json files
-
-
 function App() {
 
 

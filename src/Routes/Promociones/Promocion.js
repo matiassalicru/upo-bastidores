@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import "./Promocion.css";
-// import gato from '../../Assets/images/gato2.jpg';
+
 import cart from "../../Assets/images/cart.svg";
 import Context from '../../store/context';
 import swal from "sweetalert";

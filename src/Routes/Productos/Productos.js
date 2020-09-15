@@ -8,6 +8,8 @@ import InfoCard from "../Componentes/InfoCard/InfoCard";
 import Footer from "../Componentes/Footer/Footer";
 import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Producto from "./Producto/Producto";
+import { ChatBubble } from "../Componentes/Chat/ChatBubble";
+
 
 //import assets
 import Images from "../../Data/productos";
@@ -34,6 +36,7 @@ const Productos = () => {
 
   return (
     <div className="productos-container">
+      <ChatBubble/>
       <TitleHeader title="Nuestros Productos" color="red" />
       <InfoCard />
       <div className="video">

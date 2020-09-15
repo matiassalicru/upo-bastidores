@@ -6,9 +6,12 @@ import TitleHeader from '../Componentes/TitleHeader/TitleHeader';
 import InfoCard from '../Componentes/InfoCard/InfoCard';
 import Footer from '../Componentes/Footer/Footer';
 import HomeBtn from '../Componentes/HomeBtn/HomeBtn';
+import { ChatBubble } from "../Componentes/Chat/ChatBubble";
+
 
 const QuienesSomos = () => (
   <div className="quienes-somos-container">
+    <ChatBubble/>
     <TitleHeader title="¿Quienes Somos?" color="orange" />
     <InfoCard />
     <br />
