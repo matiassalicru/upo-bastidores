@@ -8,7 +8,6 @@ import HomeBtn from "../Componentes/HomeBtn/HomeBtn";
 import Footer from "../Componentes/Footer/Footer";
 import { ChatBubble } from "../Componentes/Chat/ChatBubble";
 
-
 //Import libraries
 import axios from "axios";
 import emailjs from "emailjs-com";
@@ -28,6 +27,7 @@ const Ventas = () => {
   const [loading, setLoading] = useState(true);
   const [mayorista, setMayorista] = useState(false);
   const [total, setTotal] = useState(0);
+  const [productos, setProductos] = useState(true);
 
   const { state, actions } = useContext(Context);
 
@@ -112,13 +112,15 @@ const Ventas = () => {
     if (selectedProducto === "Bastidor de Madera") {
       axios
         .get("https://database-upo-bastidores.herokuapp.com/madera")
-        .then((res) => setMadera(res.data));
+        .then((res) => setMadera(res.data))
+        .then(() => setProductos(false));
 
       defaultValues();
     } else if (selectedProducto === "Bastidor de Lienzo") {
       axios
         .get("https://database-upo-bastidores.herokuapp.com/lienzo")
-        .then((res) => setLienzo(res.data));
+        .then((res) => setLienzo(res.data))
+        .then(() => setProductos(true))
 
       defaultValues();
     } else if (selectedProducto !== "lienzo" || selectedProducto !== "madera") {
@@ -385,7 +387,6 @@ const Ventas = () => {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
-
   };
 
   return (
@@ -396,7 +397,7 @@ const Ventas = () => {
         </div>
       ) : (
         <div className="ventas-container">
-          <ChatBubble/>
+          <ChatBubble />
           <TitleHeader title="Compras por mayor y menor" color="salmon" />
           <InfoCard />
 
@@ -424,16 +425,23 @@ const Ventas = () => {
                   className="select-med"
                   onChange={handleMedida}
                 >
-                  {madera.length > 0 &&
-                    madera.map((producto) => (
-                      <option
-                        key={producto.ID}
-                        value={producto.ID}
-                        id="option-medida"
-                      >
-                        {producto.Medidas}
-                      </option>
-                    ))}
+                  {productos && lienzo.length > 0
+                    ? lienzo.map((producto) => (
+                        <option
+                          key={producto.ID}
+                          value={producto.ID}
+                          id="option-medida"
+                        >
+                          {producto.Medidas}
+                        </option>
+                      ))
+                    : madera.length > 0 && madera.map((producto) => (
+                        <option
+                          key={producto.ID}
+                          value={producto.ID}
+                          id="option-medida"
+                        ></option>
+                      ))}
                 </select>
               </div>
             </div>
