@@ -31,9 +31,9 @@ export const ChatBubble = () => {
           </div>
         </div>
 
-        <a href="https://wa.link/x16smx" className="chat-btn">
-            {" "}
-            <img className="chat-wsp-send" src={wsp} alt="wsp" /> Iniciar chat
+        <a href="https://walink.co/a23251" className="chat-btn">
+          {" "}
+          <img className="chat-wsp-send" src={wsp} alt="wsp" /> Iniciar chat
         </a>
       </form>
     </>
