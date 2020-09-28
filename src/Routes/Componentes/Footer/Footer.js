@@ -31,7 +31,7 @@ function Footer() {
         </div>
         <div className="item">
           <a
-            href="https://wa.link/x16smx"
+            href="https://walink.co/a23251"
             target="_Blank"
             rel="noopener noreferrer"
           >

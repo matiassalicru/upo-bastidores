@@ -67,7 +67,7 @@ function Contact() {
           <img className="contact-social-image" src={insta} alt="" />
         </a>
         <a
-          href="https://wa.link/x16smx"
+          href="https://walink.co/a23251"
           target="_blank"
           rel="noopener noreferrer"
         >
