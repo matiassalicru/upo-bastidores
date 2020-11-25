@@ -14,6 +14,8 @@ import Ventas from "./Routes/Ventas/Ventas";
 import Promociones from "./Routes/Promociones/Promociones";
 import Contact from "./Routes/Contact/Contact";
 import Galeria from "./Routes/GaleriaDeClientes/Galeria";
+import SubFooter from './Routes/Componentes/Footer/SubFooter';
+
 
 function App() {
 
@@ -33,6 +35,7 @@ function App() {
             <Redirect to="/" />
           </Switch>
         </div>
+        <SubFooter />
       </Router>
     </>
   );
