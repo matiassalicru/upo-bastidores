@@ -21,15 +21,14 @@ import cuadro5 from "../../Assets/images/wide3.png";
 
 function Promociones() {
   const promociones = [
-    ["6 BASTIDORES EN LIENZO", "2 20X20 CM", "2 20X30 CM", "2 20x40 CM"],
-    ["6 BASTIDORES EN LIENZO", "3 60x40 CM"],
-    ["6 BASTIDORES EN LIENZO", "3 100x30 CM"],
-    ["6 BASTIDORES EN LIENZO", " 30X70 CM"],
-    ["6 BASTIDORES EN LIENZO", " 40x40 CM"],
-    ["10 BASTIDORES EN LIENZO", " 15X15 CM"],
+    ["5 BASTIDORES EN LIENZO", "3 50X70 CM", "2 50X100 CM"],
+    ["6 BASTIDORES EN LIENZO", "3 100x90 CM", "3 70x30 CM"],
+    ["6 BASTIDORES EN LIENZO", "3 20x30 CM", "3 30x40 CM"],
+    ["6 BASTIDORES EN LIENZO", "3 40X40 CM", "3 30x30 CM"],
+    ["6 BASTIDORES EN LIENZO", "3 40x60 CM", "3 80x60 CM"],
   ];
 
-  const precios = ["$2000", "$3000", "$2000",'$2700','$2400','$2000'];
+  const precios = ["$3300", "$3600", "$2800",'$2800','$3700'];
 
   const { state } = useContext(Context);
 
@@ -102,16 +101,7 @@ function Promociones() {
           direction="forward"
           image={cuadro4}
         />
-        <Promocion
-          id="6"
-          title="PROMO 6"
-          description1={promociones[5][0]}
-          description2={promociones[5][1]}
-          precio={precios[5]}
-          color="salmon"
-          direction="reverse"
-          image={cuadro5}
-        />
+        
       </div>
       <HomeBtn color="green" />
       <Footer />

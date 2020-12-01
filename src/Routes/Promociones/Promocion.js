@@ -1,11 +1,10 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import "./Promocion.css";
 
 import cart from "../../Assets/images/cart.svg";
-import Context from '../../store/context';
+import Context from "../../store/context";
 import swal from "sweetalert";
 import { useHistory } from "react-router-dom";
-
 
 const PromocionL = ({
   id,
@@ -22,51 +21,50 @@ const PromocionL = ({
   const { state, actions } = useContext(Context);
   let history = useHistory();
 
-
   const addToCart = () => {
     let promo;
     switch (id) {
       case "1":
         promo = [
           "Promo 1",
-          "2 20x20",
-          "2 20x30",
-          "2 20x40",
+          "3 50X70",
+          "2 50x100",
+          " ",
           " ",
           "Cantidad:",
           1,
           " $",
-          2000,
-        ]; 
+          3300,
+        ];
         actions({ type: "setState", payload: [...state, promo] });
         promo = "";
         break;
       case "2":
         promo = [
           "Promo 2",
-          "3 60x40 CM",
-          "2 60x80 CM",
+          "3 100x90 CM",
+          "3 70x30 CM",
           " ",
           " ",
           "Cantidad:",
           1,
           " $",
-          3000,
-        ]; 
+          3600,
+        ];
         actions({ type: "setState", payload: [...state, promo] });
         promo = "";
         break;
       case "3":
         promo = [
           "Promo 3",
-          "3 100x30 CM",
-          "3 100x50 CM",
+          "3 20x30 CM",
+          "3 30x40 CM",
           " ",
           " ",
           "Cantidad:",
           1,
           " $",
-          2000,
+          2800,
         ]; //Cambiar a modo template de producto/
         actions({ type: "setState", payload: [...state, promo] });
         promo = "";
@@ -74,14 +72,14 @@ const PromocionL = ({
       case "4":
         promo = [
           "Promo 4",
-          "6 30x70 CM",
-          " ",
+          "3 40x40 CM",
+          "3 30x30 CM",
           " ",
           " ",
           "Cantidad:",
           1,
           " $",
-          2700,
+          2800,
         ]; //Cambiar a modo template de producto/
         actions({ type: "setState", payload: [...state, promo] });
         promo = "";
@@ -89,33 +87,19 @@ const PromocionL = ({
       case "5":
         promo = [
           "Promo 5",
-          "6 40x40 CM",
-          " ",
-          " ",
-          " ",
-          "Cantidad:",
-          1,
-          " $",
-          2400,
-        ]; //Cambiar a modo template de producto/
-        actions({ type: "setState", payload: [...state, promo] });
-        promo = "";
-        break;
-      case "6":
-        promo = [
-          "Promo 6",
-          "10 40x40 CM",
-          " ",
+          "3 40x60 CM",
+          "3 80x60 CM",
           " ",
           " ",
           "Cantidad:",
           1,
           " $",
-          2000,
+          3700,
         ]; //Cambiar a modo template de producto/
         actions({ type: "setState", payload: [...state, promo] });
         promo = "";
         break;
+
       default:
         break;
     }
@@ -124,12 +108,11 @@ const PromocionL = ({
       icon: "success",
       closeOnClickOutside: true,
       buttons: ["cerrar esta ventana", "ir al carrito"],
-    })
-    .then((value) => {
-      if(value){
+    }).then((value) => {
+      if (value) {
         history.push("/compras");
       }
-    })
+    });
   };
 
   return (
@@ -143,7 +126,7 @@ const PromocionL = ({
           <p id="item2">{description3}</p>
           <p id="item3">{description4}</p>
         </div>
-          <p className='promo-precio'>{precio}</p>
+        <p className="promo-precio">{precio}</p>
         <button className="promo-button" type="submit" onClick={addToCart}>
           <img srcSet={cart} alt="" />
           <p>Comprar</p>
